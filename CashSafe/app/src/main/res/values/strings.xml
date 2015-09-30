@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">CashSafe</string>
+
+    <string name="valor">Valor da Despesa (R$)</string>
+    <string name="valor2">Valor da Receita (R$)</string>
+    <string name="data">Data de Vencimento (Dia/Mês/Ano)</string>
+    <string name="data2">Data de Recebimento (Dia/Mês/Ano)</string>
+    <string name="descricao">Descrição da Despesa</string>
+    <string name="descricao2">Descrição da Receita</string>
+    <string name="pagamento">Forma de Pagamento: </string>
+    <string name="pago">Está Pago?</string>
+    <string name="receita">Recebeu?</string>
+    <string name="fixa">Despesa Fixa?</string>
+    <string name="fixa2">Receita Fixa?</string>
+    <string name="repetir">Repetir na Data (Dia/Mês/Ano)</string>
+    <string name="okay">OK</string>
+    <string name="cancel">Cancelar</string>
+
+    <string name="lista_padrao">Selecione Categoria</string>
+    <string-array name="lista">
+        <item>Alimentação</item>
+        <item>Lazer</item>
+        <item>Aluguel</item>
+        <item>Energia</item>
+        <item>Telefone</item>
+        <item>Gasolina</item>
+        <item>Roupas</item>
+        <item>Água</item>
+    </string-array>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_receita">ReceitaActivity</string>
+    <string name="title_activity_despesa">DespesaActivity</string>
+</resources>

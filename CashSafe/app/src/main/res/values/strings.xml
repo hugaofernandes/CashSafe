@@ -11,10 +11,20 @@
     <string name="pago">Está Pago?</string>
     <string name="receita">Recebeu?</string>
     <string name="fixa">Despesa Fixa?</string>
+    <string name="inicial">Tela inicial</string>
     <string name="fixa2">Receita Fixa?</string>
     <string name="repetir">Repetir na Data (Dia/Mês/Ano)</string>
     <string name="okay">OK</string>
     <string name="cancel">Cancelar</string>
+    <string name="balanco">Balanço Mensal</string>
+    <string name="saldo">Saldo</string>
+    <string name="receitabalanco">Receitas</string>
+    <string name="despesa">Despesas</string>
+    <string name="dinheiro">R$ 100,00</string>
+    <string name="receitascategoria">Receitas por Categoria</string>
+    <string name="despesascategoria">Despesas por Categoria</string>
+    <string name="select">Selecione uma Categoria</string>
+    <string name="total">Total</string>
 
     <string name="lista_padrao">Selecione Categoria</string>
     <string-array name="lista">
@@ -32,4 +42,9 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_receita">ReceitaActivity</string>
     <string name="title_activity_despesa">DespesaActivity</string>
+    <string name="title_activity_despesas_por_categoria">DespesasPorCategoriaActivity</string>
+    <string name="title_activity_despesas_categoria">DespesasCategoriaActivity</string>
+    <string name="title_activity_balanco_mensal">BalancoMensalActivity</string>
+    <string name="title_activity_receita_categoria">ReceitaCategoriaActivity</string>
+    <string name="title_activity_balanco">BalancoActivity</string>
 </resources>

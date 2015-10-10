@@ -1,93 +1,231 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="com.cashsafe.cashsafe.PrincipalActivity"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/space2" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/space3" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/space" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/space4" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PrincipalActivity"
-    android:weightSum="1">
+    android:layout_above="@+id/space4"
+    android:layout_below="@+id/space"
+    android:layout_toRightOf="@+id/space3"
+    android:layout_toStartOf="@+id/space2">
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10" />
+        android:layout_weight="0.05" />
 
-    <EditText
-        android:id="@+id/edit_message"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/valor"
-        android:layout_weight="0.10"
-         />
+        android:layout_weight="0.06"
+        android:background="@color/silver"
+        android:onClick="balancoMensal">
 
-    <EditText
-        android:id="@+id/etxt_fromdate"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/balanco"
+            android:id="@+id/textView" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_gravity="left|center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/saldo"
+                android:textColor="@color/darkgreen"
+                android:id="@+id/textView2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="50dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/receitabalanco"
+                android:textColor="@color/blue"
+                android:id="@+id/textView3"
+                android:layout_below="@+id/textView2"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/despesa"
+                android:textColor="@color/red"
+                android:id="@+id/textView4"
+                android:layout_below="@+id/textView3"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/dinheiro"
+                android:textColor="@color/blue"
+                android:id="@+id/textView5"
+                android:layout_alignBottom="@+id/textView3"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/dinheiro"
+                android:textColor="@color/darkgreen"
+                android:id="@+id/textView6"
+                android:layout_above="@+id/textView5"
+                android:layout_alignStart="@+id/textView5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/dinheiro"
+                android:textColor="@color/red"
+                android:id="@+id/textView7"
+                android:layout_below="@+id/textView5"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+    <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10"
-        android:hint="@string/data"
-        android:onClick="showDatePickerDialog"/>
+        android:layout_weight="0.05" />
 
-    <EditText
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:layout_weight="0.30"
-        android:hint="@string/descricao"
-        android:layout_below="@+id/etxt_fromdate"
-        android:layout_alignParentStart="true" />
+        android:layout_weight="0.35"
+        android:background="@color/silver"
+        android:onClick="receitasPorCategoria">
 
-    <Spinner
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/receitascategoria"
+            android:id="@+id/textView8"
+            android:layout_gravity="left|top" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pago"
-        android:id="@+id/checkBox"
-        android:layout_weight="0.10"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical">
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fixa"
-        android:id="@+id/checkBox2"
-        android:layout_weight="0.10" />
 
-    <EditText
-        android:id="@+id/etxt_fromdate2"
+        </RelativeLayout>
+    </FrameLayout>
+
+    <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10"
-        android:hint="@string/repetir"/>
+        android:layout_weight="0.05" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="0.35"
+        android:background="@color/silver"
+        android:onClick="despesasPorCategoria">
 
-    <Button
-        android:layout_width="96dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/despesascategoria"
+            android:id="@+id/textView9"
+            android:layout_gravity="left|top" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center_vertical">
+
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/okay"
-        android:id="@+id/buttonOkay"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="79dp" />
+        android:layout_weight="0.12">
 
-    <Button
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        android:id="@+id/buttonCancel"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="79dp" />
+        <Button
+            android:id="@+id/botaoreceita"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button"
+            android:text="+"
+            android:textSize="10pt"
+            android:textColor="@color/white"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="cadastroReceita"/>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/botaodespesa"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/round_button2"
+            android:text="-"
+            android:textSize="10pt"
+            android:textColor="@color/white"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignTop="@+id/botaoreceita"
+            android:layout_alignParentStart="true"
+            android:onClick="cadastroDespesa"/>
 
+    </RelativeLayout>
 
 </LinearLayout>
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.cashsafe.cashsafe;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,13 +19,17 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
+        setContentView(R.layout.activity_despesa);
+
+        Intent intent = getIntent();
 
         // Spinner element
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner2 = (Spinner) findViewById(R.id.spinner);
 
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
+        spinner2.setOnItemSelectedListener(this);
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
@@ -33,15 +38,31 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         categories.add("Aluguel");
         categories.add("Educação");
         categories.add("Energia");
+        categories.add("Transporte");
+        categories.add("Saúde");
+
+        List<String> categories2 = new ArrayList<String>();
+        categories2.add("Dinheiro");
+        categories2.add("Cartão");
+
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories2);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+        spinner2.setAdapter(dataAdapter2);
+    }
+
+    public void cancelar(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, PrincipalActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -50,7 +71,7 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         String item = parent.getItemAtPosition(position).toString();
 
         // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub

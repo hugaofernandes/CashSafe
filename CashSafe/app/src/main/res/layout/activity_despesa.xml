@@ -1,15 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.cashsafe.cashsafe.DespesaActivity">
+    tools:context="com.cashsafe.cashsafe.DespesaActivity"
+    android:background="@color/red">
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10" />
+        android:layout_weight="0.20" />
 
     <EditText
         android:id="@+id/edit_message"
@@ -24,8 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.10"
-        android:hint="@string/data"
-        android:onClick="showDatePickerDialog"/>
+        android:hint="@string/data" />
 
     <EditText
         android:layout_width="match_parent"
@@ -39,7 +40,13 @@
     <Spinner
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:prompt="@string/select"
         android:id="@+id/spinner"/>
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner2"/>
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -65,12 +72,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:orientation="horizontal">
 
         <Button
             android:layout_width="96dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="@string/okay"
             android:id="@+id/buttonOkay"
             android:layout_alignParentBottom="true"
@@ -79,12 +86,13 @@
 
         <Button
             android:layout_width="96dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="@string/cancel"
             android:id="@+id/buttonCancel"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="79dp" />
+            android:layout_marginBottom="79dp"
+            android:onClick="cancelar"/>
 
     </LinearLayout>
 

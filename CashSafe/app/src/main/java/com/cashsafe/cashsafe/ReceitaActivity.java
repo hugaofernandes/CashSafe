@@ -1,6 +1,7 @@
 package com.cashsafe.cashsafe;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,7 +19,9 @@ public class ReceitaActivity extends AppCompatActivity implements AdapterView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
+        setContentView(R.layout.activity_receita);
+
+        Intent intent = getIntent();
 
         // Spinner element
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
@@ -28,11 +31,10 @@ public class ReceitaActivity extends AppCompatActivity implements AdapterView.On
 
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
-        categories.add("Lazer");
-        categories.add("Alimentação");
-        categories.add("Aluguel");
-        categories.add("Educação");
-        categories.add("Energia");
+        categories.add("Salario");
+        categories.add("Venda");
+        categories.add("Serviço");
+        categories.add("Presente");
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -42,6 +44,13 @@ public class ReceitaActivity extends AppCompatActivity implements AdapterView.On
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+
+    }
+
+    public void cancelar(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, PrincipalActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -50,7 +59,7 @@ public class ReceitaActivity extends AppCompatActivity implements AdapterView.On
         String item = parent.getItemAtPosition(position).toString();
 
         // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+        //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub

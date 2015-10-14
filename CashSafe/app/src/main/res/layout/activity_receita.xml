@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -98,13 +99,6 @@
         android:text="@string/fixa2"
         android:id="@+id/checkBox2"
         android:layout_weight="0.10" />
-
-    <EditText
-        android:id="@+id/etxt_fromdate2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.10"
-        android:hint="@string/repetir"/>
 
     <LinearLayout
         android:layout_width="match_parent"

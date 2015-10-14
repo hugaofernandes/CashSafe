@@ -1,20 +1,32 @@
 package com.cashsafe.cashsafe;
 
-import android.app.DialogFragment;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DespesaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private EditText valor;
+    private EditText vencimento;
+    private EditText descricao;
+    private Spinner categoria;
+    private Spinner pagamento;
+    private CheckBox fixa;
+    private CheckBox pago;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +37,7 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
 
         // Spinner element
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        Spinner spinner2 = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
 
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
@@ -43,7 +55,7 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
 
         List<String> categories2 = new ArrayList<String>();
         categories2.add("Dinheiro");
-        categories2.add("Cartão");
+        categories2.add("Cartao");
 
 
         // Creating adapter for spinner
@@ -57,10 +69,42 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
         spinner2.setAdapter(dataAdapter2);
+
+        valor = (EditText)findViewById(R.id.edit_message);
+        vencimento = (EditText)findViewById(R.id.etxt_fromdate);
+        descricao = (EditText) findViewById(R.id.editText2);
+        categoria = (Spinner) findViewById(R.id.spinner);
+        pagamento = (Spinner) findViewById(R.id.spinner2);
+        pago = (CheckBox) findViewById(R.id.checkBox);
+        fixa = (CheckBox) findViewById(R.id.checkBox2);
+
     }
 
     public void cancelar(View view) {
         // Do something in response to button
+        Intent intent = new Intent(this, PrincipalActivity.class);
+        startActivity(intent);
+    }
+
+    public void okay(View view) throws ParseException {
+        Despesa despesa = new Despesa();
+        despesa.setValor(Double.parseDouble(valor.getText().toString()));
+        despesa.setCategoria(categoria.getSelectedItem().toString());
+        despesa.setDecricao(descricao.getText().toString());
+        despesa.setFixa("nao");
+        if (fixa.isEnabled()){
+            despesa.setFixa("sim");
+        }
+        despesa.setPagamento(pagamento.getSelectedItem().toString());
+        despesa.setVencimento(vencimento.getText().toString());
+        despesa.setPago("nao");
+        if (pago.isEnabled()){
+            despesa.setPago("sim");
+        }
+
+        MySQLiteHelper db = new MySQLiteHelper(this);
+        db.addDespesa(despesa);
+
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
     }

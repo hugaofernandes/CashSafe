@@ -57,6 +57,8 @@ public class PrincipalActivity extends AppCompatActivity {
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
 
+        //MySQLiteHelper db = new MySQLiteHelper(this);
+
     }
 
     public void balancoMensal(View view) {

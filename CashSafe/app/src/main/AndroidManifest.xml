@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".PrincipalActivity"
+            android:name=".atividades.PrincipalActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,52 +17,52 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ReceitaActivity"
+            android:name=".atividades.ReceitaActivity"
             android:label="@string/title_activity_receita"
-            android:parentActivityName=".PrincipalActivity" >
+            android:parentActivityName=".atividades.PrincipalActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PrincipalActivity" />
+                android:value=".atividades.PrincipalActivity" />
         </activity>
         <activity
-            android:name=".DespesaActivity"
+            android:name=".atividades.DespesaActivity"
             android:label="@string/title_activity_despesa"
-            android:parentActivityName=".PrincipalActivity" >
+            android:parentActivityName=".atividades.PrincipalActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PrincipalActivity" />
+                android:value=".atividades.PrincipalActivity" />
         </activity>
         <activity
-            android:name=".DespesasCategoriaActivity"
+            android:name=".atividades.DespesasCategoriaActivity"
             android:label="@string/title_activity_despesas_categoria"
-            android:parentActivityName=".PrincipalActivity" >
+            android:parentActivityName=".atividades.PrincipalActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PrincipalActivity" />
+                android:value=".atividades.PrincipalActivity" />
         </activity>
         <activity
-            android:name=".ReceitaCategoriaActivity"
+            android:name=".atividades.ReceitaCategoriaActivity"
             android:label="@string/title_activity_receita_categoria"
-            android:parentActivityName=".PrincipalActivity" >
+            android:parentActivityName=".atividades.PrincipalActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PrincipalActivity" />
+                android:value=".atividades.PrincipalActivity" />
         </activity>
         <activity
-            android:name=".BalancoActivity"
+            android:name=".atividades.BalancoActivity"
             android:label="@string/title_activity_balanco"
-            android:parentActivityName=".PrincipalActivity" >
+            android:parentActivityName=".atividades.PrincipalActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PrincipalActivity" />
+                android:value=".atividades.PrincipalActivity" />
         </activity>
         <activity
-            android:name=".BalancoMensalActivity"
+            android:name=".atividades.BalancoMensalActivity"
             android:label="@string/title_activity_balanco_mensal"
-            android:parentActivityName=".PrincipalActivity" >
+            android:parentActivityName=".atividades.PrincipalActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".PrincipalActivity" />
+                android:value=".atividades.PrincipalActivity" />
         </activity>
     </application>
 

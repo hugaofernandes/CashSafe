@@ -1,4 +1,4 @@
-package com.cashsafe.cashsafe;
+package com.cashsafe.cashsafe.atividades;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class BalancoActivity extends AppCompatActivity {
+import com.cashsafe.cashsafe.R;
+
+public class DespesasCategoriaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_balanco);
+        setContentView(R.layout.activity_despesas_categoria);
 
         Intent intent = getIntent();
 

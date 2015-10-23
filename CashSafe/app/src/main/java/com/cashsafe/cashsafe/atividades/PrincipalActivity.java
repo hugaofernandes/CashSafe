@@ -1,4 +1,4 @@
-package com.cashsafe.cashsafe;
+package com.cashsafe.cashsafe.atividades;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.cashsafe.cashsafe.DAO.CategoriaDespesaDAO;
+import com.cashsafe.cashsafe.R;
+import com.cashsafe.cashsafe.modelo.CategoriaDespesa;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -16,7 +19,9 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import android.util.Log;
 
 public class PrincipalActivity extends AppCompatActivity {
 
@@ -57,7 +62,16 @@ public class PrincipalActivity extends AppCompatActivity {
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
 
-        //MySQLiteHelper db = new MySQLiteHelper(this);
+
+        Log.d(PrincipalActivity.class.getSimpleName(), "creatingDao category");
+        CategoriaDespesaDAO crud = new CategoriaDespesaDAO(getBaseContext());
+        Log.d(PrincipalActivity.class.getSimpleName(), "createdDao Dao");
+        Log.d(PrincipalActivity.class.getSimpleName(),"getting categories");
+        List<CategoriaDespesa> categorias = crud.getTodasCategoriasDespesas();
+        for(CategoriaDespesa categoria:categorias){
+            System.out.println(categoria.getNome());
+        }
+        Log.d(PrincipalActivity.class.getSimpleName(), "got all");
 
     }
 

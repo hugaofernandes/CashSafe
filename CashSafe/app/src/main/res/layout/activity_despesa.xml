@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/red"
-    tools:context="com.cashsafe.cashsafe.DespesaActivity"
+    tools:context="com.cashsafe.cashsafe.atividades.DespesaActivity"
     android:orientation="vertical">
 
     <Space
@@ -78,16 +78,18 @@
         android:layout_below="@+id/etxt_fromdate"
         android:layout_alignParentStart="true" />
 
-    <Spinner
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/select"
-        android:id="@+id/spinner"/>
+
 
     <Spinner
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner2"/>
+        android:id="@+id/metodoPagamento"/>
+
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select"
+        android:id="@+id/categorias"/>
 
     <CheckBox
         android:layout_width="wrap_content"

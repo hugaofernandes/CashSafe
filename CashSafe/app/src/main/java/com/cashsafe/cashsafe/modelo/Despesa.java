@@ -1,4 +1,4 @@
-package com.cashsafe.cashsafe;
+package com.cashsafe.cashsafe.modelo;
 
 import java.util.Date;
 

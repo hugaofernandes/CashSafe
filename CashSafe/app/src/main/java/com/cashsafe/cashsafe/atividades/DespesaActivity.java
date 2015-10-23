@@ -1,4 +1,4 @@
-package com.cashsafe.cashsafe;
+package com.cashsafe.cashsafe.atividades;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +12,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.cashsafe.cashsafe.DAO.CategoriaDespesaDAO;
+import com.cashsafe.cashsafe.modelo.Despesa;
+import com.cashsafe.cashsafe.Util.MySQLiteHelper;
+import com.cashsafe.cashsafe.R;
+
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DespesaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -35,46 +38,30 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
 
         Intent intent = getIntent();
 
-        // Spinner element
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
 
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(this);
-        spinner2.setOnItemSelectedListener(this);
-
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Lazer");
-        categories.add("Alimentação");
-        categories.add("Aluguel");
-        categories.add("Educação");
-        categories.add("Energia");
-        categories.add("Transporte");
-        categories.add("Saúde");
-
-        List<String> categories2 = new ArrayList<String>();
-        categories2.add("Dinheiro");
-        categories2.add("Cartao");
+        Spinner categoria = (Spinner) findViewById(R.id.categorias);
+        categoria.setOnItemSelectedListener(this);
+        CategoriaDespesaDAO despesaDAO = new CategoriaDespesaDAO(getBaseContext());
+        List<String> categorias = despesaDAO.getTodosOsNomes();
+        ArrayAdapter<String> categoriasAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias);
+        categoriasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoria.setAdapter(categoriasAdapter);
 
 
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories2);
+        Spinner pagamento = (Spinner) findViewById(R.id.metodoPagamento);
+        pagamento.setOnItemSelectedListener(this);
+        List<String> metodoPagamento = new ArrayList<String>();
+        metodoPagamento.add("Dinheiro");
+        metodoPagamento.add("Cartao");
+        ArrayAdapter<String> metodoPagamentoAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, metodoPagamento);
+        metodoPagamentoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        pagamento.setAdapter(metodoPagamentoAdapter);
 
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
-        spinner2.setAdapter(dataAdapter2);
 
         valor = (EditText)findViewById(R.id.edit_message);
         vencimento = (EditText)findViewById(R.id.etxt_fromdate);
         descricao = (EditText) findViewById(R.id.editText2);
-        categoria = (Spinner) findViewById(R.id.spinner);
-        pagamento = (Spinner) findViewById(R.id.spinner2);
         pago = (CheckBox) findViewById(R.id.checkBox);
         fixa = (CheckBox) findViewById(R.id.checkBox2);
 
@@ -103,7 +90,7 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         }
 
         MySQLiteHelper db = new MySQLiteHelper(this);
-        db.addDespesa(despesa);
+
 
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);

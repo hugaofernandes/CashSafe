@@ -1,24 +1,16 @@
 package com.cashsafe.cashsafe.modelo;
 
 /**
- * Created by aelx on 23/10/15.
+ * Created by aelx on 24/10/15.
  */
-public class CategoriaDespesa {
-    private String nome;
+public class CategoriaDespesa extends Categoria{
 
-    public CategoriaDespesa() {}
-
-    public CategoriaDespesa(String nome){
-        this.nome = nome;
+    public CategoriaDespesa() {
+        this.setTipo(tipo_categorias.despesa);
     }
+    public CategoriaDespesa(String nome) {
+        super(nome);
+        this.setTipo(tipo_categorias.despesa);
 
-    public String getNome() {
-        return nome;
     }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-
 }

@@ -4,118 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@color/white"
     tools:context="com.cashsafe.cashsafe.atividades.ReceitaActivity"
     android:orientation="vertical"
-    android:weightSum="1">
-
-    <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/space2" />
-
-    <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/space3" />
-
-    <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/space" />
-
-    <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/space4" />
+   >
 
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/silver"
-    android:layout_above="@+id/space4"
-    android:layout_below="@+id/space"
-    android:layout_toRightOf="@+id/space3"
-    android:layout_toStartOf="@+id/space2">
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.10" />
+    android:background="@color/white"
+        android:layout_margin="5dp">
 
     <EditText
+        android:layout_marginTop="5dp"
         android:id="@+id/edit_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/valor2"
-        android:layout_weight="0.10"
         />
 
     <EditText
+        android:layout_marginTop="5dp"
         android:id="@+id/etxt_fromdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.10"
+
         android:hint="@string/data2" />
 
     <EditText
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText2"
-        android:layout_weight="0.30"
         android:hint="@string/descricao2"
         android:layout_below="@+id/etxt_fromdate"
         android:layout_alignParentStart="true" />
 
     <Spinner
+        android:layout_marginTop="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"/>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/receita"
-        android:id="@+id/checkBox"
-        android:layout_weight="0.10"
-        />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fixa2"
-        android:id="@+id/checkBox2"
-        android:layout_weight="0.10" />
+        android:id="@+id/categorias"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_width="fill_parent"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="96dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/okay"
+
             android:id="@+id/buttonOkay"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="79dp" />
 
         <Button
-            android:layout_width="96dp"
+            android:layout_width="150dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:id="@+id/buttonCancel"

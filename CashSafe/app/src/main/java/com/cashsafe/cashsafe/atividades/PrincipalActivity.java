@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.cashsafe.cashsafe.DAO.CategoriaDespesaDAO;
 import com.cashsafe.cashsafe.R;
+import com.cashsafe.cashsafe.modelo.Categoria;
 import com.cashsafe.cashsafe.modelo.CategoriaDespesa;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -62,7 +63,7 @@ public class PrincipalActivity extends AppCompatActivity {
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
 
-
+        CategoriaDespesa categoria2 = new CategoriaDespesa();
         Log.d(PrincipalActivity.class.getSimpleName(), "creatingDao category");
         CategoriaDespesaDAO crud = new CategoriaDespesaDAO(getBaseContext());
         Log.d(PrincipalActivity.class.getSimpleName(), "createdDao Dao");

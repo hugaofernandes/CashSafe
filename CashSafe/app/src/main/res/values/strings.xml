@@ -7,7 +7,7 @@
     <string name="data2">Data de Recebimento (Dia/Mês/Ano)</string>
     <string name="descricao">Descrição da Despesa</string>
     <string name="descricao2">Descrição da Receita</string>
-    <string name="pagamento">Forma de Pagamento: </string>
+    <string name="metodoPagamento">Forma de Pagamento: </string>
     <string name="pago">Está Pago?</string>
     <string name="receita">Recebeu?</string>
     <string name="fixa">Despesa Fixa?</string>

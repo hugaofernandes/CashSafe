@@ -39,7 +39,7 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         Intent intent = getIntent();
 
 
-        Spinner categoria = (Spinner) findViewById(R.id.categorias);
+        categoria = (Spinner) findViewById(R.id.categorias);
         categoria.setOnItemSelectedListener(this);
         CategoriaDespesaDAO despesaDAO = new CategoriaDespesaDAO(getBaseContext());
         List<String> categorias = despesaDAO.getTodosOsNomes();
@@ -48,7 +48,7 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         categoria.setAdapter(categoriasAdapter);
 
 
-        Spinner pagamento = (Spinner) findViewById(R.id.metodoPagamento);
+        pagamento = (Spinner) findViewById(R.id.metodoPagamento);
         pagamento.setOnItemSelectedListener(this);
         List<String> metodoPagamento = new ArrayList<String>();
         metodoPagamento.add("Dinheiro");
@@ -62,13 +62,11 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         valor = (EditText)findViewById(R.id.edit_message);
         vencimento = (EditText)findViewById(R.id.etxt_fromdate);
         descricao = (EditText) findViewById(R.id.editText2);
-        pago = (CheckBox) findViewById(R.id.checkBox);
-        fixa = (CheckBox) findViewById(R.id.checkBox2);
+
 
     }
 
     public void cancelar(View view) {
-        // Do something in response to button
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
     }
@@ -78,19 +76,11 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         despesa.setValor(Double.parseDouble(valor.getText().toString()));
         despesa.setCategoria(categoria.getSelectedItem().toString());
         despesa.setDecricao(descricao.getText().toString());
-        despesa.setFixa("nao");
-        if (fixa.isEnabled()){
-            despesa.setFixa("sim");
-        }
-        despesa.setPagamento(pagamento.getSelectedItem().toString());
-        despesa.setVencimento(vencimento.getText().toString());
-        despesa.setPago("nao");
-        if (pago.isEnabled()){
-            despesa.setPago("sim");
-        }
-
-        MySQLiteHelper db = new MySQLiteHelper(this);
-
+        despesa.setFixa(fixa.isEnabled());
+        despesa.setMetodoPagamento(pagamento.getSelectedItem().toString());
+        //despesa.setVencimento(vencimento.getText().toString());
+       // despesa.setPago(pago.isEnabled());
+        //MySQLiteHelper db = new MySQLiteHelper(this);
 
         Intent intent = new Intent(this, PrincipalActivity.class);
         startActivity(intent);
@@ -101,8 +91,6 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
         // On selecting a spinner item
         String item = parent.getItemAtPosition(position).toString();
 
-        // Showing selected spinner item
-        //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub

@@ -9,11 +9,22 @@ public class Despesa {
 
     private double valor;
     private String decricao;
-    private String vencimento;
-    private String pagamento;
-    private String pago;
-    private String fixa;
+    private Date vencimento;
+    private String metodoPagamento;
+    private boolean pago;
+    private boolean fixa;
     private String categoria;
+
+    public Despesa(Date vencimento, boolean pago, String metodoPagamento, boolean fixa, String categoria, String decricao, double valor) {
+        this.vencimento = vencimento;
+        this.pago = pago;
+        this.metodoPagamento = metodoPagamento;
+        this.fixa = fixa;
+        this.categoria = categoria;
+        this.decricao = decricao;
+        this.valor = valor;
+    }
+    public Despesa(){}
 
     public double getValor() {
         return valor;
@@ -31,35 +42,35 @@ public class Despesa {
         this.decricao = decricao;
     }
 
-    public String getVencimento() {
+    public Date getVencimento() {
         return vencimento;
     }
 
-    public void setVencimento(String vencimento) {
+    public void setVencimento(Date vencimento) {
         this.vencimento = vencimento;
     }
 
-    public String getPagamento() {
-        return pagamento;
+    public String getMetodoPagamento() {
+        return metodoPagamento;
     }
 
-    public void setPagamento(String pagamento) {
-        this.pagamento = pagamento;
+    public void setMetodoPagamento(String metodoPagamento) {
+        this.metodoPagamento = metodoPagamento;
     }
 
-    public String getPago() {
+    public boolean isPago() {
         return pago;
     }
 
-    public void setPago(String pago) {
+    public void setPago(boolean pago) {
         this.pago = pago;
     }
 
-    public String getFixa() {
+    public boolean isFixa() {
         return fixa;
     }
 
-    public void setFixa(String fixa) {
+    public void setFixa(boolean fixa) {
         this.fixa = fixa;
     }
 

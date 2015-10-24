@@ -1,7 +1,10 @@
 package com.cashsafe.cashsafe.atividades;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.cashsafe.cashsafe.DAO.CategoriaReceitaDAO;
 import com.cashsafe.cashsafe.R;
 
 import java.util.ArrayList;
@@ -24,27 +28,18 @@ public class ReceitaActivity extends AppCompatActivity implements AdapterView.On
 
         Intent intent = getIntent();
 
-        // Spinner element
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ActionBar bar = getSupportActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.PICTONBLUE)));
 
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(this);
+        Spinner categorias = (Spinner) findViewById(R.id.categorias);
+        categorias.setOnItemSelectedListener(this);
 
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Salario");
-        categories.add("Venda");
-        categories.add("Serviço");
-        categories.add("Presente");
+        CategoriaReceitaDAO despesaDAO = new CategoriaReceitaDAO(getBaseContext());
+        List<String> nome_categorias = despesaDAO.getTodosOsNomes();
 
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-
-        // Drop down layout style - list view with radio button
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nome_categorias);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+        categorias.setAdapter(dataAdapter);
 
     }
 

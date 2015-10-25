@@ -23,36 +23,24 @@ public class CategoriaReceitaDAO {
 
     public CategoriaReceitaDAO(Context context) {
         this.sqlHelper = new MySQLiteHelper(context);
-        Log.d(this.getClass().getSimpleName(), "created categoria DAO");
     }
-    public void inserirCategoriaReceita(CategoriaReceita categoria) {
 
-        Log.d(this.getClass().getSimpleName(), "calling sqlHelper.getWritableDatabase()");
+    public void inserirCategoriaReceita(CategoriaReceita categoria) {
         db = sqlHelper.getWritableDatabase();
-        Log.d(this.getClass().getSimpleName(), "called sqlHelper.getWritableDatabase()");
-        Log.d(this.getClass().getSimpleName(), "adding category");
         ContentValues values = new ContentValues();
         values.put("nome", categoria.getNome());
         db.insert("categoriaDespesas", null, values);
         db.close();
-        Log.d(this.getClass().getSimpleName(), "added category");
     }
     public List<CategoriaReceita> getTodasCategoriasDespesas() {
         List<CategoriaReceita> categorias = new LinkedList<CategoriaReceita>();
-
-        Log.d(this.getClass().getSimpleName(), "getting all categories");
-
         db = sqlHelper.getWritableDatabase();
         Cursor cursor =  db.rawQuery("SELECT  * FROM categoria where categoria.tipo = @0", new String[]{ Categoria.tipo_categorias.receita.toString() });
-
-
         if (cursor.moveToFirst()) {
             do {
                 categorias.add(new CategoriaReceita(cursor.getString(0)));
             } while (cursor.moveToNext());
         }
-
-        Log.d(this.getClass().getSimpleName(), "gotten all categories");
 
         return categorias;
     }

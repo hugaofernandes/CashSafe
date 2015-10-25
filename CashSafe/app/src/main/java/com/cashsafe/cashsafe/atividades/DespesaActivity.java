@@ -9,16 +9,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.cashsafe.cashsafe.DAO.CategoriaDespesaDAO;
 import com.cashsafe.cashsafe.modelo.Despesa;
-import com.cashsafe.cashsafe.Util.MySQLiteHelper;
 import com.cashsafe.cashsafe.R;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DespesaActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -28,8 +30,7 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
     private EditText descricao;
     private Spinner categoria;
     private Spinner pagamento;
-    private CheckBox fixa;
-    private CheckBox pago;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +75,11 @@ public class DespesaActivity extends AppCompatActivity implements AdapterView.On
     public void okay(View view) throws ParseException {
         Despesa despesa = new Despesa();
         despesa.setValor(Double.parseDouble(valor.getText().toString()));
-        despesa.setCategoria(categoria.getSelectedItem().toString());
         despesa.setDecricao(descricao.getText().toString());
-        despesa.setFixa(fixa.isEnabled());
+        System.out.println(vencimento.getText().toString());
         despesa.setMetodoPagamento(pagamento.getSelectedItem().toString());
-        //despesa.setVencimento(vencimento.getText().toString());
-       // despesa.setPago(pago.isEnabled());
+        despesa.setData(Calendar.getInstance());
+     
         //MySQLiteHelper db = new MySQLiteHelper(this);
 
         Intent intent = new Intent(this, PrincipalActivity.class);

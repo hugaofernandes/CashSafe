@@ -63,17 +63,6 @@ public class PrincipalActivity extends AppCompatActivity {
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
 
-        CategoriaDespesa categoria2 = new CategoriaDespesa();
-        Log.d(PrincipalActivity.class.getSimpleName(), "creatingDao category");
-        CategoriaDespesaDAO crud = new CategoriaDespesaDAO(getBaseContext());
-        Log.d(PrincipalActivity.class.getSimpleName(), "createdDao Dao");
-        Log.d(PrincipalActivity.class.getSimpleName(),"getting categories");
-        List<CategoriaDespesa> categorias = crud.getTodasCategoriasDespesas();
-        for(CategoriaDespesa categoria:categorias){
-            System.out.println(categoria.getNome());
-        }
-        Log.d(PrincipalActivity.class.getSimpleName(), "got all");
-
     }
 
     public void balancoMensal(View view) {

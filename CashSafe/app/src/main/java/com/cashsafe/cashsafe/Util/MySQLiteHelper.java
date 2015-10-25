@@ -18,7 +18,7 @@ import java.util.List;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     // Database Name
     private static final String DATABASE_NAME = "cashsafe";
 
@@ -29,17 +29,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        String categoriaDespesa = "CREATE TABLE categoria ( nome text primary key ,tipo text not null);";
-
-                ;
-
-        Log.d(this.getClass().getSimpleName(), "----- creating table categoria-------");
-        db.execSQL(categoriaDespesa);
-        Log.d(this.getClass().getSimpleName(), "----- created table categoria-------");
-
-        Log.d(this.getClass().getSimpleName(), "----- adding default despesa categories------");
-
+        System.out.println("creating");
+        String categoria = "CREATE TABLE categoria ( nome text primary key ,tipo text not null);";
+        db.execSQL(categoria);
+        //adicionando categoriaDespesa padrão
         List<String> categoriasDefault = new ArrayList<String>();
         categoriasDefault.add("Lazer");
         categoriasDefault.add("Test");
@@ -55,10 +48,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             values.put("tipo", Categoria.tipo_categorias.despesa.toString());
             db.insert("categoria", null, values);
         }
-
-        Log.d(this.getClass().getSimpleName(), "----- added default despesa categories------");
-
-        Log.d(this.getClass().getSimpleName(), "----- adding default receita categories------");
+        //adicionando categoriaDespesa padrão
 
         categoriasDefault = new ArrayList<String>();
         categoriasDefault.add("Trabalho");
@@ -72,21 +62,32 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             db.insert("categoria", null, values);
         }
 
-        Log.d(this.getClass().getSimpleName(), "----- added default receita categories------");
+        String despesa = "CREATE TABLE despesa ( id integer primary key autoincrement" +
+                ",valor text not null," +
+                "descricao text not null," +
+                "data text not null," +
+                "metodo_pagamento text not null," +
+                "categoria text not null," +
+                "foreign key (categoria) references categoria(nome));";
+        db.execSQL(despesa);
+
+        String receita = "CREATE TABLE receita ( id integer primary key autoincrement" +
+                ",valor text not null," +
+                "descricao text not null," +
+                "data text not null," +
+                "categoria text not null," +
+                "foreign key (categoria) references categoria(nome));";
+        db.execSQL(receita);
 
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        Log.d(this.getClass().getSimpleName(), "onUpgrade() executing drop queries");
         db.execSQL("DROP TABLE IF EXISTS categoria");
         db.execSQL("DROP TABLE IF EXISTS despesa");
         db.execSQL("DROP TABLE IF EXISTS receita");
-        Log.d(this.getClass().getSimpleName(), "onUpgrade() calling onCreate(db)");
         this.onCreate(db);
-        Log.d(this.getClass().getSimpleName(), "onUpgrade() called onCreate(db)");
     }
 
 

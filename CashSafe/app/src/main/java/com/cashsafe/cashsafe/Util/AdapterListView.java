@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cashsafe.cashsafe.R;
 import com.cashsafe.cashsafe.modelo.Despesa;
+import com.cashsafe.cashsafe.modelo.Movimentacao;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ import java.util.List;
  */
 public class AdapterListView  extends BaseAdapter {
     private LayoutInflater mInflater;
-    private List<Despesa> itens;
+    private List<Movimentacao> itens;
 
-    public AdapterListView(Context context, List<Despesa> itens) {
+    public AdapterListView(Context context, List<Movimentacao> itens) {
         this.itens = itens;
         mInflater = LayoutInflater.from(context);
     }
@@ -28,7 +29,7 @@ public class AdapterListView  extends BaseAdapter {
         return itens.size();
     }
 
-    public Despesa getItem(int position) {
+    public Movimentacao getItem(int position) {
         return itens.get(position);
     }
 
@@ -50,9 +51,9 @@ public class AdapterListView  extends BaseAdapter {
             itemHolder = (ItemSuporte) view.getTag();
         }
 
-        Despesa item = itens.get(position);
+        Movimentacao item = itens.get(position);
         itemHolder.descricao.setText(item.getDecricao());
-        itemHolder.categoria.setText(item.getCategoria());
+        itemHolder.categoria.setText(item.getCategoria().getNome());
         itemHolder.valor.setText("R$ "+item.getValor());
         //retorna a view com as informações
         return view;

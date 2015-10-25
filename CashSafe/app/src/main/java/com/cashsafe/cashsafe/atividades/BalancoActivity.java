@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cashsafe.cashsafe.DAO.DespesaDAO;
 import com.cashsafe.cashsafe.DAO.ReceitaDAO;
@@ -28,24 +29,38 @@ public class BalancoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balanco);
-        Intent intent = getIntent();
 
+        getSupportActionBar().setTitle("Balanço");
         ReceitaDAO daoReceitas = new ReceitaDAO(this.getBaseContext());
         ArrayList<Movimentacao> movimentacoesReceitas = (ArrayList<Movimentacao>) daoReceitas.getTodasReceitasAsMovimentacoes();
+
+        ListView listReceitas= (ListView)findViewById( R.id.lista_receitas);
+        AdapterListView adapter = new AdapterListView(this.getBaseContext(), movimentacoesReceitas);
+        listReceitas.setAdapter(adapter);
+
+        Double valorTotalReceitas = daoReceitas.getSomaValores();
+        TextView totalReceitas = (TextView)findViewById(R.id.total_receitas);
+        totalReceitas.setText("R$"+String.format("%.2f", valorTotalReceitas));
+
+        daoReceitas.closePool();
 
         DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());
         ArrayList<Movimentacao> movimentacoesDespesas = (ArrayList<Movimentacao>) daoDespesas.getTodasDespesasAsMovimentacoes();
 
-        Log.d(PrincipalActivity.class.getSimpleName(), "getting list");
-        ListView listReceitas= (ListView)findViewById( R.id.lista_receitas);
-        AdapterListView adapter = new AdapterListView(this.getBaseContext(), movimentacoesReceitas);
-        Log.d(PrincipalActivity.class.getSimpleName(), "set adapter");
-        listReceitas.setAdapter(adapter);
-
-        Log.d(PrincipalActivity.class.getSimpleName(), "getting list");
         ListView listaDespesas= (ListView)findViewById( R.id.lista_despesas);
         adapter = new AdapterListView(this.getBaseContext(), movimentacoesDespesas);
-        Log.d(PrincipalActivity.class.getSimpleName(), "set adapter");
         listaDespesas.setAdapter(adapter);
+
+        Double valorTotalDespesas = daoDespesas.getSomaValores();
+        TextView totalDespesas = (TextView)findViewById(R.id.total_despesas);
+        totalDespesas.setText("R$"+String.format("%.2f", valorTotalDespesas));
+
+        daoDespesas.closePool();
+
+        Double valorTotalBalanco = valorTotalReceitas-valorTotalDespesas;
+        TextView totalBalanco = (TextView)findViewById(R.id.valor_balanco);
+        int cor = (valorTotalBalanco < 0) ? getResources().getColor(R.color.POMEGRANATE) : getResources().getColor(R.color.PICTONBLUE);
+        totalBalanco.setTextColor(cor);
+        totalBalanco.setText("R$"+String.format("%.2f", valorTotalBalanco));
     }
 }

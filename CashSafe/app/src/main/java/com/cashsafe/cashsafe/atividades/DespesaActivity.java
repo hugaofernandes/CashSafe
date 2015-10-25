@@ -1,6 +1,5 @@
 package com.cashsafe.cashsafe.atividades;
 
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -71,7 +70,7 @@ public class DespesaActivity extends AppCompatActivity {
         cal.setTime(formatadorEntrada.parse(data.getText().toString()));
         despesa.setData(cal);
         DespesaDAO dao = new DespesaDAO(this.getBaseContext());
-        dao.inserirReceita(despesa, categorias.getSelectedItem().toString());
+        dao.inserirDespesa(despesa, categorias.getSelectedItem().toString());
         this.finish();
     }
 

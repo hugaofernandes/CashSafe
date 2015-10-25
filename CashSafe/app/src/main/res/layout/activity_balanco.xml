@@ -51,12 +51,12 @@
                     android:textColor="@color/blue" />
 
                 <TextView
+                    android:id="@+id/total_receitas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10sp"
                     android:gravity="center|end|right"
-                    android:text="R$ 1230,00"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/blue" />
             </RelativeLayout>
@@ -102,12 +102,12 @@
                     android:textColor="@color/red" />
 
                 <TextView
+                    android:id="@+id/total_despesas"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10sp"
                     android:gravity="center|end|right"
-                    android:text="R$ 1230,00"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/red" />
             </RelativeLayout>
@@ -120,10 +120,8 @@
         android:id="@+id/valor_balanco"
         android:layout_width="fill_parent"
         android:layout_height="75dp"
-        android:layout_below="@id/layout_superior"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="R$ 200,00"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/green" />
 </LinearLayout>

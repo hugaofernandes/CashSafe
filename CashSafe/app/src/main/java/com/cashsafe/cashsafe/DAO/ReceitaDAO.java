@@ -27,10 +27,14 @@ public class ReceitaDAO {
 
     public ReceitaDAO(Context context) {
         this.sqlHelper = new MySQLiteHelper(context);
+        db = sqlHelper.getWritableDatabase();
+    }
+
+    public void closePool(){
+        db.close();
     }
 
     public void inserirReceita(Receita receita,String nomeCategoria) {
-        db = sqlHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("valor", receita.getValor());
         values.put("descricao", receita.getDecricao());
@@ -39,18 +43,16 @@ public class ReceitaDAO {
         values.put("data", data);
         values.put("categoria", nomeCategoria);
         db.insert("receita", null, values);
-        db.close();
+
     }
     public List<Receita> getTodasReceitas() {
         List<Receita> receitas = new LinkedList<Receita>();
-        db = sqlHelper.getWritableDatabase();
         Receita receita;
         Calendar cal;
         SimpleDateFormat formatador = new SimpleDateFormat("DD/MM/yyyy");
         Cursor cursor =  db.rawQuery("SELECT  * FROM receita",null);
         if (cursor.moveToFirst()) {
             do {
-                System.out.println("------");
                 receita = new Receita();
                 receita.setId(cursor.getInt(0));
                 receita.setValor(cursor.getDouble(1));
@@ -66,8 +68,15 @@ public class ReceitaDAO {
                 receitas.add(receita);
             } while (cursor.moveToNext());
         }
-
         return receitas;
+    }
+
+    public double getSomaValores(){
+        Cursor cursor =  db.rawQuery("SELECT  sum(receita.valor) FROM receita",null);
+        if (cursor.moveToFirst()) {
+                return cursor.getDouble(0);
+        }
+        return 0;
     }
 
     public List<Movimentacao> getTodasReceitasAsMovimentacoes() {

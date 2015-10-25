@@ -54,7 +54,7 @@ public class AdapterListView  extends BaseAdapter {
         Movimentacao item = itens.get(position);
         itemHolder.descricao.setText(item.getDecricao());
         itemHolder.categoria.setText(item.getCategoria().getNome());
-        itemHolder.valor.setText("R$ "+item.getValor());
+        itemHolder.valor.setText(String.format("%.2f", item.getValor()));
         //retorna a view com as informações
         return view;
     }

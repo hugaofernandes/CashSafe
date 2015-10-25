@@ -25,10 +25,14 @@ public class DespesaDAO {
 
     public DespesaDAO(Context context) {
         this.sqlHelper = new MySQLiteHelper(context);
+        db = sqlHelper.getWritableDatabase();
     }
 
-    public void inserirReceita(Despesa despesa,String nomeCategoria) {
-        db = sqlHelper.getWritableDatabase();
+    public void closePool(){
+        db.close();
+    }
+
+    public void inserirDespesa(Despesa despesa, String nomeCategoria) {
         ContentValues values = new ContentValues();
         values.put("valor", despesa.getValor());
         values.put("descricao", despesa.getDecricao());
@@ -38,18 +42,15 @@ public class DespesaDAO {
         values.put("metodo_pagamento",despesa.getMetodoPagamento());
         values.put("categoria", nomeCategoria);
         db.insert("despesa", null, values);
-        db.close();
     }
     public List<Despesa> getTodasDespesas() {
         List<Despesa> despesas = new LinkedList<Despesa>();
-        db = sqlHelper.getWritableDatabase();
         Despesa despesa;
         Calendar cal;
         SimpleDateFormat formatador = new SimpleDateFormat("DD/MM/yyyy");
         Cursor cursor =  db.rawQuery("SELECT  * FROM despesa",null);
         if (cursor.moveToFirst()) {
             do {
-                System.out.println("------");
                 despesa = new Despesa();
                 despesa.setId(cursor.getInt(0));
                 despesa.setValor(cursor.getDouble(1));
@@ -67,8 +68,14 @@ public class DespesaDAO {
                 despesas.add(despesa);
             } while (cursor.moveToNext());
         }
-
         return despesas;
+    }
+    public double getSomaValores(){
+        Cursor cursor =  db.rawQuery("SELECT  sum(despesa.valor) FROM despesa",null);
+        if (cursor.moveToFirst()) {
+            return cursor.getDouble(0);
+        }
+        return 0;
     }
 
     public List<Movimentacao> getTodasDespesasAsMovimentacoes() {

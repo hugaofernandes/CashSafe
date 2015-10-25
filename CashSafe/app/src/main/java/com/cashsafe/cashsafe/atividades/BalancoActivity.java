@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.cashsafe.cashsafe.DAO.DespesaDAO;
 import com.cashsafe.cashsafe.DAO.ReceitaDAO;
 import com.cashsafe.cashsafe.R;
 import com.cashsafe.cashsafe.Util.AdapterListView;
@@ -28,13 +29,23 @@ public class BalancoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balanco);
         Intent intent = getIntent();
-        ReceitaDAO dao = new ReceitaDAO(this.getBaseContext());
-        ArrayList<Movimentacao> movimentacoes = (ArrayList<Movimentacao>) dao.getTodasReceitasAsMovimentacoes();
+
+        ReceitaDAO daoReceitas = new ReceitaDAO(this.getBaseContext());
+        ArrayList<Movimentacao> movimentacoesReceitas = (ArrayList<Movimentacao>) daoReceitas.getTodasReceitasAsMovimentacoes();
+
+        DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());
+        ArrayList<Movimentacao> movimentacoesDespesas = (ArrayList<Movimentacao>) daoDespesas.getTodasDespesasAsMovimentacoes();
 
         Log.d(PrincipalActivity.class.getSimpleName(), "getting list");
-        ListView list= (ListView)findViewById( R.id.lista_receitas);
-        AdapterListView adapter = new AdapterListView(this.getBaseContext(), movimentacoes);
+        ListView listReceitas= (ListView)findViewById( R.id.lista_receitas);
+        AdapterListView adapter = new AdapterListView(this.getBaseContext(), movimentacoesReceitas);
         Log.d(PrincipalActivity.class.getSimpleName(), "set adapter");
-        list.setAdapter(adapter);
+        listReceitas.setAdapter(adapter);
+
+        Log.d(PrincipalActivity.class.getSimpleName(), "getting list");
+        ListView listaDespesas= (ListView)findViewById( R.id.lista_despesas);
+        adapter = new AdapterListView(this.getBaseContext(), movimentacoesDespesas);
+        Log.d(PrincipalActivity.class.getSimpleName(), "set adapter");
+        listaDespesas.setAdapter(adapter);
     }
 }

@@ -6,11 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.cashsafe.cashsafe.Util.MySQLiteHelper;
-import com.cashsafe.cashsafe.modelo.CategoriaDespesa;
 import com.cashsafe.cashsafe.modelo.CategoriaReceita;
+import com.cashsafe.cashsafe.modelo.Despesa;
 import com.cashsafe.cashsafe.modelo.Movimentacao;
-import com.cashsafe.cashsafe.modelo.Receita;
-
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,42 +17,43 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by aelx on 24/10/15.
+ * Created by aelx on 25/10/15.
  */
-public class ReceitaDAO {
+public class DespesaDAO {
     private MySQLiteHelper sqlHelper;
     private SQLiteDatabase db;
 
-    public ReceitaDAO(Context context) {
+    public DespesaDAO(Context context) {
         this.sqlHelper = new MySQLiteHelper(context);
     }
 
-    public void inserirReceita(Receita receita,String nomeCategoria) {
+    public void inserirReceita(Despesa despesa,String nomeCategoria) {
         db = sqlHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("valor", receita.getValor());
-        values.put("descricao", receita.getDecricao());
-        SimpleDateFormat formatadorSaida = new SimpleDateFormat("DD/MM/yyyy");
-        String data = formatadorSaida.format(receita.getData().getTime());
+        values.put("valor", despesa.getValor());
+        values.put("descricao", despesa.getDecricao());
+        SimpleDateFormat formatador_saida = new SimpleDateFormat("DD/MM/yyyy");
+        String data = formatador_saida.format(despesa.getData().getTime());
         values.put("data", data);
+        values.put("metodo_pagamento",despesa.getMetodoPagamento());
         values.put("categoria", nomeCategoria);
-        db.insert("receita", null, values);
+        db.insert("despesa", null, values);
         db.close();
     }
-    public List<Receita> getTodasReceitas() {
-        List<Receita> receitas = new LinkedList<Receita>();
+    public List<Despesa> getTodasDespesas() {
+        List<Despesa> despesas = new LinkedList<Despesa>();
         db = sqlHelper.getWritableDatabase();
-        Receita receita;
+        Despesa despesa;
         Calendar cal;
         SimpleDateFormat formatador = new SimpleDateFormat("DD/MM/yyyy");
-        Cursor cursor =  db.rawQuery("SELECT  * FROM receita",null);
+        Cursor cursor =  db.rawQuery("SELECT  * FROM despesa",null);
         if (cursor.moveToFirst()) {
             do {
                 System.out.println("------");
-                receita = new Receita();
-                receita.setId(cursor.getInt(0));
-                receita.setValor(cursor.getDouble(1));
-                receita.setDecricao(cursor.getString(2));
+                despesa = new Despesa();
+                despesa.setId(cursor.getInt(0));
+                despesa.setValor(cursor.getDouble(1));
+                despesa.setDecricao(cursor.getString(2));
                 cal = Calendar.getInstance();
                 try {
                     cal.setTime(formatador.parse(cursor.getString(3)));
@@ -62,18 +61,20 @@ public class ReceitaDAO {
                 catch (Exception e){
                     e.printStackTrace();
                 }
-                receita.setCategoria(new CategoriaReceita(cursor.getString(4)));
-                receitas.add(receita);
+                despesa.setMetodoPagamento(cursor.getString(4));
+                System.out.println(despesa.getMetodoPagamento());
+                despesa.setCategoria(new CategoriaReceita(cursor.getString(5)));
+                despesas.add(despesa);
             } while (cursor.moveToNext());
         }
 
-        return receitas;
+        return despesas;
     }
 
-    public List<Movimentacao> getTodasReceitasAsMovimentacoes() {
+    public List<Movimentacao> getTodasDespesasAsMovimentacoes() {
         List<Movimentacao> movimentacoes = new ArrayList<>();
-        List<Receita> receitas= this.getTodasReceitas();
-        for(Movimentacao movimentacao:receitas){
+        List<Despesa> despesas= this.getTodasDespesas();
+        for(Movimentacao movimentacao:despesas){
             movimentacoes.add(movimentacao);
         }
         return movimentacoes;

@@ -18,6 +18,7 @@
     <item name="cinza" type="color">#CCCC</item>
     <item name="PICTONBLUE" type="color">#22A7F0</item>
     <item name="ALICEBLUE" type="color">#E4F1FE</item>
+    <item name="POMEGRANATE" type="color">#F22613</item>
     <integer-array name="androidcolors">
         <item>@color/blue</item>
         <item>@color/purple</item>

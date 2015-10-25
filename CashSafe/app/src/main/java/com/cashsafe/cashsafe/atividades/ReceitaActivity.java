@@ -39,17 +39,16 @@ public class ReceitaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receita);
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.PICTONBLUE)));
 
-        ActionBar bar = getSupportActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.PICTONBLUE)));
 
         categorias = (Spinner) findViewById(R.id.categorias_receita);
 
 
         CategoriaReceitaDAO despesaDAO = new CategoriaReceitaDAO(getBaseContext());
-        List<String> nome_categorias = despesaDAO.getTodosOsNomes();
+        List<String> nomeCategorias = despesaDAO.getTodosOsNomes();
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nome_categorias);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nomeCategorias);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorias.setAdapter(dataAdapter);
 
@@ -68,8 +67,8 @@ public class ReceitaActivity extends AppCompatActivity {
         receita.setValor(Double.parseDouble(valor.getText().toString()));
         receita.setDecricao(descricao.getText().toString());
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatador_entrada = new SimpleDateFormat("DD/MM/yyyy");
-        cal.setTime(formatador_entrada.parse(data.getText().toString()));
+        SimpleDateFormat formatadorEntrada = new SimpleDateFormat("DD/MM/yyyy");
+        cal.setTime(formatadorEntrada.parse(data.getText().toString()));
         receita.setData(cal);
         ReceitaDAO dao = new ReceitaDAO(this.getBaseContext());
         dao.inserirReceita(receita,categorias.getSelectedItem().toString());

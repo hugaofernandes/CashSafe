@@ -15,6 +15,7 @@ import com.cashsafe.cashsafe.modelo.Receita;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class ReceitaDAO {
         Receita receita;
         Calendar cal;
         SimpleDateFormat formatador = new SimpleDateFormat("DD/MM/yyyy");
-        Cursor cursor =  db.rawQuery("SELECT  * FROM receita",null);
+        Cursor cursor =  db.rawQuery("SELECT  * FROM receita", null);
         if (cursor.moveToFirst()) {
             do {
                 receita = new Receita();
@@ -80,6 +81,17 @@ public class ReceitaDAO {
                 return cursor.getDouble(0);
         }
         return 0;
+    }
+
+    public HashMap getSomaValoresPorCategoria(){
+        Cursor cursor =  db.rawQuery("SELECT  receita.categoria,sum(receita.valor) FROM receita GROUP BY receita.categoria;",null);
+        HashMap<String, Double> resultado = new HashMap<String, Double>();
+        if (cursor.moveToFirst()) {
+            do {
+                resultado.put(cursor.getString(0),cursor.getDouble(1));
+            } while (cursor.moveToNext());
+        }
+        return resultado;
     }
 
     public List<Movimentacao> getTodasReceitasAsMovimentacoes() {

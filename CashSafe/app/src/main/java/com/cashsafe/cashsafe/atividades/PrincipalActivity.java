@@ -24,7 +24,10 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import android.util.Log;
 import android.widget.ListView;
@@ -56,8 +59,8 @@ public class PrincipalActivity extends AppCompatActivity {
         graficoReceitas.setDescription("");
         graficoReceitas.setRotationEnabled(false);
 
-        adicionarDadosDespesas();
-        adicionarDadosReceitas();
+
+
         Legend l = graficoDespesas.getLegend();
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
         l.setXEntrySpace(7);
@@ -69,6 +72,8 @@ public class PrincipalActivity extends AppCompatActivity {
         l.setYEntrySpace(5);
 
         this.setValoresRecEdes();
+        this.setValoresGraficoDespesa();
+        this.setValoresGraficoReceita();
 
     }
 
@@ -77,6 +82,8 @@ public class PrincipalActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         this.setValoresRecEdes();
+        this.setValoresGraficoDespesa();
+        this.setValoresGraficoReceita();
     }
 
     public void setValoresRecEdes(){
@@ -89,77 +96,36 @@ public class PrincipalActivity extends AppCompatActivity {
 
         Double valorTotalDespesas = daoDespesas.getSomaValores();
         TextView totalDespesas = (TextView)findViewById(R.id.valor_despesas_principal);
-        totalDespesas.setText("R$"+String.format("%.2f", valorTotalDespesas));
+        totalDespesas.setText("R$" + String.format("%.2f", valorTotalDespesas));
 
 
         Double valorTotalBalanco = valorTotalReceitas-valorTotalDespesas;
         TextView totalBalanco = (TextView)findViewById(R.id.valor_saldo_principal);
         int cor = (valorTotalBalanco < 0) ? getResources().getColor(R.color.POMEGRANATE) : getResources().getColor(R.color.PICTONBLUE);
         totalBalanco.setTextColor(cor);
-        totalBalanco.setText("R$"+String.format("%.2f", valorTotalBalanco));
+        totalBalanco.setText("R$" + String.format("%.2f", valorTotalBalanco));
 
         daoDespesas.fecharBanco();
         daoReceitas.fecharBanco();
     }
-    public void balancoMensal(View view) {
-        Intent intent = new Intent(this, BalancoActivity.class);
-        startActivity(intent);
-    }
 
-    public void receitasPorCategoria(View view) {
-        Intent intent = new Intent(this, ReceitaCategoriaActivity.class);
-        startActivity(intent);
-    }
+    public void setValoresGraficoDespesa(){
+        DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());
 
-    public void despesasPorCategoria(View view) {
-        Intent intent = new Intent(this, DespesasCategoriaActivity.class);
-        startActivity(intent);
-    }
+        HashMap<String, Double> resultado = daoDespesas.getSomaValoresPorCategoria();
 
-    public void cadastroReceita(View view) {
-        Intent intent = new Intent(this, ReceitaActivity.class);
-        startActivity(intent);
-    }
 
-    public void cadastroDespesa(View view) {
-        Intent intent = new Intent(this, DespesaActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_principal, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+        ArrayList<String> xVals = new ArrayList<String>();
+        int i = 0;
+        for (Map.Entry<String, Double> entry : resultado.entrySet())
+        {
+            yVals1.add(new Entry(Float.parseFloat(entry.getValue().toString()), i));
+            xVals.add(entry.getKey());
+            i++;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
 
-    private void adicionarDadosDespesas() {
-        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
-        for (int i = 0; i < yDataDespesas.length; i++)
-            yVals1.add(new Entry(yDataDespesas[i], i));
-
-        ArrayList<String> xVals = new ArrayList<String>();
-
-        for (int i = 0; i < xDataDespesas.length; i++)
-            xVals.add(xDataDespesas[i]);
-
-        // create pie data set
         PieDataSet dataSet = new PieDataSet(yVals1, "Despesas");
         dataSet.setSliceSpace(3);
         dataSet.setSelectionShift(5);
@@ -185,7 +151,6 @@ public class PrincipalActivity extends AppCompatActivity {
         colors.add(ColorTemplate.getHoloBlue());
         dataSet.setColors(colors);
 
-        // instantiate pie data object now
         PieData data = new PieData(xVals, dataSet);
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.GRAY);
@@ -198,25 +163,31 @@ public class PrincipalActivity extends AppCompatActivity {
         // update pie chart
         graficoDespesas.invalidate();
         graficoDespesas.getLegend().setEnabled(false);
+
+        daoDespesas.fecharBanco();
+
     }
 
-    private void adicionarDadosReceitas() {
+    public void setValoresGraficoReceita(){
+        ReceitaDAO receitaDAO = new ReceitaDAO(this.getBaseContext());
+
+        HashMap<String, Double> resultado = receitaDAO.getSomaValoresPorCategoria();
+
+
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
-        for (int i = 0; i < yDataReceitas.length; i++)
-            yVals1.add(new Entry(yDataReceitas[i], i));
-
         ArrayList<String> xVals = new ArrayList<String>();
+        int i = 0;
+        for (Map.Entry<String, Double> entry : resultado.entrySet())
+        {
+            yVals1.add(new Entry(Float.parseFloat(entry.getValue().toString()), i));
+            xVals.add(entry.getKey());
+            i++;
+        }
 
-        for (int i = 0; i < xDataReceitas.length; i++)
-            xVals.add(xDataReceitas[i]);
-
-        // create pie data set
         PieDataSet dataSet = new PieDataSet(yVals1, "Receitas");
         dataSet.setSliceSpace(3);
         dataSet.setSelectionShift(5);
 
-        // add many colors
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
@@ -237,18 +208,45 @@ public class PrincipalActivity extends AppCompatActivity {
         colors.add(ColorTemplate.getHoloBlue());
         dataSet.setColors(colors);
 
-        // instantiate pie data object now
         PieData data = new PieData(xVals, dataSet);
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.GRAY);
 
         graficoReceitas.setData(data);
 
-        // undo all highlights
         graficoReceitas.highlightValues(null);
-
-        // update pie chart
         graficoReceitas.invalidate();
         graficoReceitas.getLegend().setEnabled(false);
+
+        receitaDAO.fecharBanco();
+
     }
+
+    public void balancoMensal(View view) {
+        Intent intent = new Intent(this, BalancoActivity.class);
+        startActivity(intent);
+    }
+
+    public void receitasPorCategoria(View view) {
+        Intent intent = new Intent(this, ReceitaCategoriaActivity.class);
+        startActivity(intent);
+    }
+
+    public void despesasPorCategoria(View view) {
+        Intent intent = new Intent(this, DespesasCategoriaActivity.class);
+        startActivity(intent);
+    }
+
+    public void cadastroReceita(View view) {
+        Intent intent = new Intent(this, ReceitaActivity.class);
+        startActivity(intent);
+    }
+
+    public void cadastroDespesa(View view) {
+        Intent intent = new Intent(this, DespesaActivity.class);
+        startActivity(intent);
+    }
+
+
+
 }

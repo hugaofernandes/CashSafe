@@ -13,8 +13,10 @@ import com.cashsafe.cashsafe.modelo.Movimentacao;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by aelx on 25/10/15.
@@ -72,12 +74,24 @@ public class DespesaDAO {
         }
         return despesas;
     }
+
     public double getSomaValores(){
         Cursor cursor =  db.rawQuery("SELECT  sum(despesa.valor) FROM despesa",null);
         if (cursor.moveToFirst()) {
             return cursor.getDouble(0);
         }
         return 0;
+    }
+
+    public HashMap getSomaValoresPorCategoria(){
+        Cursor cursor =  db.rawQuery("SELECT  despesa.categoria,sum(despesa.valor) FROM despesa GROUP BY despesa.categoria;",null);
+        HashMap<String, Double> resultado = new HashMap<String, Double>();
+        if (cursor.moveToFirst()) {
+            do {
+                resultado.put(cursor.getString(0),cursor.getDouble(1));
+            } while (cursor.moveToNext());
+        }
+        return resultado;
     }
 
     public List<Movimentacao> getTodasDespesasAsMovimentacoes() {

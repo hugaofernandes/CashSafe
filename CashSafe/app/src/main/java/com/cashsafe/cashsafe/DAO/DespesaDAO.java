@@ -66,6 +66,7 @@ public class DespesaDAO {
                 catch (Exception e){
                     e.printStackTrace();
                 }
+                despesa.setData(cal);
                 despesa.setMetodoPagamento(cursor.getString(4));
                 System.out.println(despesa.getMetodoPagamento());
                 despesa.setCategoria(new CategoriaReceita(cursor.getString(5)));
@@ -73,6 +74,22 @@ public class DespesaDAO {
             } while (cursor.moveToNext());
         }
         return despesas;
+    }
+
+    public void editar(Despesa despesa,String categoria){
+        SimpleDateFormat formatadorSaida = new SimpleDateFormat("DD/MM/yyyy");
+        String data = formatadorSaida.format(despesa.getData().getTime());
+        ContentValues values = new ContentValues();
+        values.put("valor", String.valueOf(despesa.getValor()));
+        values.put("descricao", despesa.getDecricao());
+        values.put("data", data);
+        values.put("categoria", categoria);
+        values.put("metodo_pagamento",despesa.getMetodoPagamento());
+        int i = db.update("despesa", values, "id" + " = ?", new String[]{ String.valueOf(despesa.getId())});
+    }
+
+    public void apagar(Despesa despesa){
+        db.delete("despesa", "id"+" = ?",new String[]{ String.valueOf(despesa.getId())});
     }
 
     public double getSomaValores(){

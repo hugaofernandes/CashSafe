@@ -34,7 +34,7 @@ public class AdapterListView  extends BaseAdapter {
     }
 
     public long getItemId(int position) {
-        return position;
+        return itens.get(position).getId();
     }
 
     public View getView(int position, View view, ViewGroup parent) {

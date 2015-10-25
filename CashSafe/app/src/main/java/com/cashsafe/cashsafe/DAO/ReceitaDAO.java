@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.cashsafe.cashsafe.Util.MySQLiteHelper;
+import com.cashsafe.cashsafe.modelo.Categoria;
 import com.cashsafe.cashsafe.modelo.CategoriaDespesa;
 import com.cashsafe.cashsafe.modelo.CategoriaReceita;
 import com.cashsafe.cashsafe.modelo.Movimentacao;
@@ -44,6 +45,7 @@ public class ReceitaDAO {
         values.put("descricao", receita.getDecricao());
         SimpleDateFormat formatadorSaida = new SimpleDateFormat("DD/MM/yyyy");
         String data = formatadorSaida.format(receita.getData().getTime());
+        System.out.println("salvar data:"+data);
         values.put("data", data);
         values.put("categoria", nomeCategoria);
         db.insert("receita", null, values);
@@ -64,17 +66,32 @@ public class ReceitaDAO {
                 cal = Calendar.getInstance();
                 try {
                     cal.setTime(formatador.parse(cursor.getString(3)));
+
                 }
                 catch (Exception e){
                     e.printStackTrace();
                 }
+                receita.setData(cal);
                 receita.setCategoria(new CategoriaReceita(cursor.getString(4)));
                 receitas.add(receita);
             } while (cursor.moveToNext());
         }
         return receitas;
     }
+    public void editar(Receita receita,String categoria){
+        SimpleDateFormat formatadorSaida = new SimpleDateFormat("DD/MM/yyyy");
+        String data = formatadorSaida.format(receita.getData().getTime());
+        ContentValues values = new ContentValues();
+        values.put("valor", String.valueOf(receita.getValor()));
+        values.put("descricao", receita.getDecricao());
+        values.put("data", data);
 
+        values.put("categoria", categoria);
+        int i = db.update("receita", values, "id" + " = ?", new String[]{ String.valueOf(receita.getId())});
+    }
+    public void apagar(Receita receita){
+        db.delete("receita", "id"+" = ?",new String[]{ String.valueOf(receita.getId())});
+    }
     public double getSomaValores(){
         Cursor cursor =  db.rawQuery("SELECT  sum(receita.valor) FROM receita",null);
         if (cursor.moveToFirst()) {

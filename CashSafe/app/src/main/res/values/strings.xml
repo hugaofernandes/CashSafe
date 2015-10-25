@@ -47,4 +47,6 @@
     <string name="title_activity_balanco_mensal">BalancoMensalActivity</string>
     <string name="title_activity_receita_categoria">ReceitaCategoriaActivity</string>
     <string name="title_activity_balanco">BalancoActivity</string>
+    <string name="title_activity_editar_receita">EditarReceitaActivity</string>
+    <string name="title_activity_editar_despesa">EditarDespesaActivity</string>
 </resources>

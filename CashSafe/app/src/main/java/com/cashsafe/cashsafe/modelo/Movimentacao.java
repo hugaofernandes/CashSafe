@@ -1,20 +1,28 @@
 package com.cashsafe.cashsafe.modelo;
 
+import android.os.Parcelable;
+
 import java.util.Calendar;
 
 /**
  * Created by aelx on 24/10/15.
  */
-public abstract class Movimentacao {
+public abstract class Movimentacao implements Parcelable {
 
-    private int id;
-    private double valor;
-    private String decricao;
-    private Calendar data;
+    protected int id;
+    protected double valor;
+    protected String decricao;
+    protected Calendar data;
 
     private Categoria categoria;
 
-
+    public Movimentacao(int id, double valor, String decricao, Calendar data, Categoria categoria) {
+        this.id = id;
+        this.valor = valor;
+        this.decricao = decricao;
+        this.data = data;
+        this.categoria = categoria;
+    }
 
     public Movimentacao(Calendar data,Categoria categoria, String decricao, double valor) {
         this.data = data;

@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/balancotext"
-            android:layout_toLeftOf="@+id/receitavalor"
+            android:layout_toLeftOf="@+id/valor_receita_principal"
             android:paddingLeft="15dp"
             android:paddingTop="3dp"
             android:textColor="@color/blue"
@@ -41,7 +41,7 @@
             android:textSize="17dp" />
 
         <TextView
-            android:id="@+id/receitavalor"
+            android:id="@+id/valor_receita_principal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/receitalabel"
-            android:layout_toLeftOf="@+id/despesasvalor"
+            android:layout_toLeftOf="@+id/valor_despesas_principal"
             android:paddingLeft="15dp"
             android:textColor="@color/red"
             android:paddingTop="3dp"
@@ -66,7 +66,7 @@
             android:textSize="17dp" />
 
         <TextView
-            android:id="@+id/despesasvalor"
+            android:id="@+id/valor_despesas_principal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/despesaslabel"
-            android:layout_toLeftOf="@+id/saldovalor"
+            android:layout_toLeftOf="@+id/valor_saldo_principal"
             android:paddingLeft="15dp"
             android:textColor="@color/green"
             android:paddingTop="3dp"
@@ -91,7 +91,7 @@
             android:textSize="17dp" />
 
         <TextView
-            android:id="@+id/saldovalor"
+            android:id="@+id/valor_saldo_principal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

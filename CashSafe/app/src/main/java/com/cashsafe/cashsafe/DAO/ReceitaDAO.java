@@ -27,10 +27,13 @@ public class ReceitaDAO {
 
     public ReceitaDAO(Context context) {
         this.sqlHelper = new MySQLiteHelper(context);
-        db = sqlHelper.getWritableDatabase();
+        this.abrirBanco();
     }
 
-    public void closePool(){
+    public void abrirBanco(){
+        db = sqlHelper.getWritableDatabase();
+    }
+    public void fecharBanco(){
         db.close();
     }
 

@@ -1,13 +1,7 @@
 package com.cashsafe.cashsafe.atividades;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,13 +9,9 @@ import com.cashsafe.cashsafe.DAO.DespesaDAO;
 import com.cashsafe.cashsafe.DAO.ReceitaDAO;
 import com.cashsafe.cashsafe.R;
 import com.cashsafe.cashsafe.Util.AdapterListView;
-import com.cashsafe.cashsafe.modelo.Despesa;
 import com.cashsafe.cashsafe.modelo.Movimentacao;
-import com.cashsafe.cashsafe.modelo.Receita;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class BalancoActivity extends AppCompatActivity {
 
@@ -42,7 +32,7 @@ public class BalancoActivity extends AppCompatActivity {
         TextView totalReceitas = (TextView)findViewById(R.id.total_receitas);
         totalReceitas.setText("R$"+String.format("%.2f", valorTotalReceitas));
 
-        daoReceitas.closePool();
+        daoReceitas.fecharBanco();
 
         DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());
         ArrayList<Movimentacao> movimentacoesDespesas = (ArrayList<Movimentacao>) daoDespesas.getTodasDespesasAsMovimentacoes();
@@ -55,7 +45,7 @@ public class BalancoActivity extends AppCompatActivity {
         TextView totalDespesas = (TextView)findViewById(R.id.total_despesas);
         totalDespesas.setText("R$"+String.format("%.2f", valorTotalDespesas));
 
-        daoDespesas.closePool();
+        daoDespesas.fecharBanco();
 
         Double valorTotalBalanco = valorTotalReceitas-valorTotalDespesas;
         TextView totalBalanco = (TextView)findViewById(R.id.valor_balanco);

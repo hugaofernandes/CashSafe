@@ -9,9 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cashsafe.cashsafe.DAO.CategoriaDespesaDAO;
+import com.cashsafe.cashsafe.DAO.DespesaDAO;
+import com.cashsafe.cashsafe.DAO.ReceitaDAO;
 import com.cashsafe.cashsafe.R;
+import com.cashsafe.cashsafe.Util.AdapterListView;
 import com.cashsafe.cashsafe.modelo.Categoria;
 import com.cashsafe.cashsafe.modelo.CategoriaDespesa;
+import com.cashsafe.cashsafe.modelo.Movimentacao;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -23,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.util.Log;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class PrincipalActivity extends AppCompatActivity {
 
@@ -40,7 +46,6 @@ public class PrincipalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         Intent intent = getIntent();
 
-        // configure pie chart
         graficoDespesas = (PieChart) findViewById(R.id.categoriaschart);
         graficoDespesas.setDrawHoleEnabled(false);
         graficoDespesas.setDescription("");
@@ -63,8 +68,39 @@ public class PrincipalActivity extends AppCompatActivity {
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
 
+        this.setValoresRecEdes();
+
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.setValoresRecEdes();
+    }
+
+    public void setValoresRecEdes(){
+        ReceitaDAO daoReceitas = new ReceitaDAO(this.getBaseContext());
+        DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());
+
+        Double valorTotalReceitas = daoReceitas.getSomaValores();
+        TextView totalReceitas = (TextView)findViewById(R.id.valor_receita_principal);
+        totalReceitas.setText("R$" + String.format("%.2f", valorTotalReceitas));
+
+        Double valorTotalDespesas = daoDespesas.getSomaValores();
+        TextView totalDespesas = (TextView)findViewById(R.id.valor_despesas_principal);
+        totalDespesas.setText("R$"+String.format("%.2f", valorTotalDespesas));
+
+
+        Double valorTotalBalanco = valorTotalReceitas-valorTotalDespesas;
+        TextView totalBalanco = (TextView)findViewById(R.id.valor_saldo_principal);
+        int cor = (valorTotalBalanco < 0) ? getResources().getColor(R.color.POMEGRANATE) : getResources().getColor(R.color.PICTONBLUE);
+        totalBalanco.setTextColor(cor);
+        totalBalanco.setText("R$"+String.format("%.2f", valorTotalBalanco));
+
+        daoDespesas.fecharBanco();
+        daoReceitas.fecharBanco();
+    }
     public void balancoMensal(View view) {
         Intent intent = new Intent(this, BalancoActivity.class);
         startActivity(intent);

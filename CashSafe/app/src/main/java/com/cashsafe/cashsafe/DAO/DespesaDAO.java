@@ -25,10 +25,12 @@ public class DespesaDAO {
 
     public DespesaDAO(Context context) {
         this.sqlHelper = new MySQLiteHelper(context);
+        this.abrirBanco();
+    }
+    public void abrirBanco(){
         db = sqlHelper.getWritableDatabase();
     }
-
-    public void closePool(){
+    public void fecharBanco(){
         db.close();
     }
 

@@ -72,6 +72,18 @@
             android:name=".atividades.EditarDespesaActivity"
             android:label="@string/title_activity_editar_despesa" >
         </activity>
+        <activity
+            android:name=".atividades.CategoriasActivity"
+            android:label="@string/title_activity_categorias" >
+        </activity>
+        <activity
+            android:name=".atividades.EditarCategoriaDespesaActivity"
+            android:label="@string/title_activity_editar_categoria_despesa" >
+        </activity>
+        <activity
+            android:name=".atividades.EditarCategoriaReceitaActivity"
+            android:label="@string/title_activity_editar_categoria_receita" >
+        </activity>
     </application>
 
 </manifest>

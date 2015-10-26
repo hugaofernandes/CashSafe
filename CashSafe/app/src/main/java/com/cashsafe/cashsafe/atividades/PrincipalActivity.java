@@ -86,6 +86,22 @@ public class PrincipalActivity extends AppCompatActivity {
         this.setValoresGraficoReceita();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.abrir_categorias) {
+            Intent intent = new Intent(this, CategoriasActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void setValoresRecEdes(){
         ReceitaDAO daoReceitas = new ReceitaDAO(this.getBaseContext());
         DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());

@@ -30,14 +30,16 @@ public class CategoriaDespesaDAO {
         db = sqlHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("nome", categoria.getNome());
-        db.insert("categoriaDespesas", null, values);
+        values.put("tipo",Categoria.tipo_categorias.despesa.toString());
+        db.insert("categoria", null, values);
+        System.out.println("inserted");
         db.close();
     }
 
     public List<CategoriaDespesa> getTodasCategoriasDespesas() {
         List<CategoriaDespesa> categorias = new LinkedList<CategoriaDespesa>();
         db = sqlHelper.getWritableDatabase();
-        Cursor cursor =  db.rawQuery("SELECT  * FROM categoria where categoria.tipo = @0", new String[]{ Categoria.tipo_categorias.despesa.toString() });
+        Cursor cursor =  db.rawQuery("SELECT  * FROM categoria where categoria.tipo = @0 and ativo = @1", new String[]{ Categoria.tipo_categorias.despesa.toString() ,String.valueOf(1)});
         if (cursor.moveToFirst()) {
             do {
                 categorias.add(new CategoriaDespesa(cursor.getString(0)));
@@ -46,6 +48,33 @@ public class CategoriaDespesaDAO {
         return categorias;
     }
 
+    public void apagar(String nome){
+        db = sqlHelper.getWritableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT count(*) FROM despesa where categoria = @0;",new String[]{nome});
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        if (count == 0){
+            db.delete("categoria", "nome" + " = ?", new String[]{nome});
+        }
+        else{
+            ContentValues values = new ContentValues();
+            values.put("nome", nome);
+            values.put("tipo", Categoria.tipo_categorias.despesa.toString());
+            values.put("ativo", 0);
+            int i = db.update("categoria", values, "nome" + " = ?", new String[]{nome});
+        }
+    }
+
+    public List<Categoria> getTodasAsCategorias(){
+        List<Categoria> categorias = new ArrayList<>();
+        List<CategoriaDespesa> categoriaDespesas = this.getTodasCategoriasDespesas();
+        for(Categoria categoria:categoriaDespesas){
+            categorias.add(categoria);
+        }
+        return categorias;
+    }
     public List<String> getTodosOsNomes() {
         List<CategoriaDespesa> categorias = this.getTodasCategoriasDespesas();
         List<String> nomes = new ArrayList<String>();

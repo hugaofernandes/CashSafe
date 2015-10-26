@@ -5,8 +5,8 @@
     tools:context=".PrincipalActivity">
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/abrir_categorias"
+        android:title="Categorias"
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>

@@ -30,7 +30,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         System.out.println("creating");
-        String categoria = "CREATE TABLE categoria ( nome text primary key ,tipo text not null);";
+        String categoria = "CREATE TABLE categoria ( nome text primary key ,tipo text not null, ativo integer not null);";
         db.execSQL(categoria);
         //adicionando categoriaDespesa padrão
         List<String> categoriasDefault = new ArrayList<String>();
@@ -46,6 +46,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         for(String nomeCategoria:categoriasDefault){
             values.put("nome",nomeCategoria);
             values.put("tipo", Categoria.tipo_categorias.despesa.toString());
+            values.put("ativo",1);
             db.insert("categoria", null, values);
         }
         //adicionando categoriaDespesa padrão
@@ -59,6 +60,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         for(String nomeCategoria:categoriasDefault){
             values.put("nome",nomeCategoria);
             values.put("tipo", Categoria.tipo_categorias.receita.toString());
+            values.put("ativo",1);
             db.insert("categoria", null, values);
         }
 

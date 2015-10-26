@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cashsafe.cashsafe.fragmentos.TabDespesas">
+
+    <ListView
+        android:id="@+id/lista_categorias_receitas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#FFECECEC"
+        android:dividerHeight="0sp" />
+    <Button
+        android:id="@+id/botao_add_cat_desp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_button"
+        android:text="+"
+        android:layout_gravity="end"
+        android:textSize="10pt"
+        android:textColor="@color/white"
+        android:gravity="center_vertical|center_horizontal"
+        android:onClick="cadastroCategoriaReceita"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

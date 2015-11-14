@@ -49,7 +49,7 @@ public class DespesaDAO {
         db.insert("despesa", null, values);
     }
     public List<Despesa> getTodasDespesas() {
-        List<Despesa> despesas = new LinkedList<Despesa>();
+        List<Despesa> despesas = new ArrayList<Despesa>();
         Despesa despesa;
         Calendar cal;
         SimpleDateFormat formatador =  new SimpleDateFormat("d/M/y");

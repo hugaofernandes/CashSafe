@@ -15,7 +15,9 @@ import com.cashsafe.cashsafe.R;
 import com.cashsafe.cashsafe.Util.AdapterListView;
 import com.cashsafe.cashsafe.modelo.Categoria;
 import com.cashsafe.cashsafe.modelo.CategoriaDespesa;
+import com.cashsafe.cashsafe.modelo.Despesa;
 import com.cashsafe.cashsafe.modelo.Movimentacao;
+import com.cashsafe.cashsafe.modelo.Receita;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -24,6 +26,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -105,12 +108,27 @@ public class PrincipalActivity extends AppCompatActivity {
     public void setValoresRecEdes(){
         ReceitaDAO daoReceitas = new ReceitaDAO(this.getBaseContext());
         DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());
-
-        Double valorTotalReceitas = daoReceitas.getSomaValores();
+        Calendar hoje = Calendar.getInstance();
+        ArrayList<Receita> receitas = (ArrayList<Receita>) daoReceitas.getTodasReceitas();
+        Double valorTotalReceitas = 0.0;
+        for (Receita receita:receitas){
+            if(receita.getData().get(Calendar.MONTH)==hoje.get(Calendar.MONTH) &&
+                    receita.getData().get(Calendar.YEAR)==hoje.get(Calendar.YEAR)){
+                valorTotalReceitas+=receita.getValor();
+            }
+        }
         TextView totalReceitas = (TextView)findViewById(R.id.valor_receita_principal);
         totalReceitas.setText("R$" + String.format("%.2f", valorTotalReceitas));
 
-        Double valorTotalDespesas = daoDespesas.getSomaValores();
+        ArrayList<Despesa> despesas = (ArrayList<Despesa>) daoDespesas.getTodasDespesas();
+        Double valorTotalDespesas = 0.0;
+        for (Despesa despesa:despesas){
+            if(despesa.getData().get(Calendar.MONTH)==hoje.get(Calendar.MONTH) &&
+                    despesa.getData().get(Calendar.YEAR)==hoje.get(Calendar.YEAR)){
+                valorTotalDespesas+=despesa.getValor();
+            }
+        }
+
         TextView totalDespesas = (TextView)findViewById(R.id.valor_despesas_principal);
         totalDespesas.setText("R$" + String.format("%.2f", valorTotalDespesas));
 

@@ -52,7 +52,7 @@ public class ReceitaDAO {
 
     }
     public List<Receita> getTodasReceitas() {
-        List<Receita> receitas = new LinkedList<Receita>();
+        List<Receita> receitas = new ArrayList<>();
         Receita receita;
         Calendar cal;
         SimpleDateFormat formatador =  new SimpleDateFormat("d/M/y");

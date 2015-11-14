@@ -48,7 +48,7 @@ public class EditarReceitaActivity extends AppCompatActivity {
         descricao = (EditText) findViewById(R.id.editar_descricao_receita);
         data = (EditText) findViewById(R.id.editar_data_receita);
 
-        SimpleDateFormat formatador = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatador =  new SimpleDateFormat("d/M/y");
         String dataText = formatador.format(receita.getData().getTime());
         valor.setText(String.valueOf(receita.getValor()));
         descricao.setText(receita.getDecricao());
@@ -60,7 +60,7 @@ public class EditarReceitaActivity extends AppCompatActivity {
         receita.setValor(Double.parseDouble(valor.getText().toString()));
         receita.setDecricao(descricao.getText().toString());
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatadorEntrada = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatadorEntrada =  new SimpleDateFormat("d/M/y");
         try {
             cal.setTime(formatadorEntrada.parse(data.getText().toString()));
         } catch (ParseException e) {

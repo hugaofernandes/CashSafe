@@ -67,7 +67,7 @@ public class ReceitaActivity extends AppCompatActivity {
         receita.setValor(Double.parseDouble(valor.getText().toString()));
         receita.setDecricao(descricao.getText().toString());
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatadorEntrada = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatadorEntrada =  new SimpleDateFormat("d/M/y");
         cal.setTime(formatadorEntrada.parse(data.getText().toString()));
         receita.setData(cal);
         ReceitaDAO dao = new ReceitaDAO(this.getBaseContext());

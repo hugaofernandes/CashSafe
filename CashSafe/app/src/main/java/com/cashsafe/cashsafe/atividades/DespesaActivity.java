@@ -3,6 +3,7 @@ package com.cashsafe.cashsafe.atividades;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -64,11 +65,13 @@ public class DespesaActivity extends AppCompatActivity {
         Despesa despesa = new Despesa();
         despesa.setValor(Double.parseDouble(valor.getText().toString()));
         despesa.setDecricao(descricao.getText().toString());
+
         despesa.setMetodoPagamento(pagamento.getSelectedItem().toString());
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatadorEntrada = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatadorEntrada = new SimpleDateFormat("d/M/y");
         cal.setTime(formatadorEntrada.parse(data.getText().toString()));
         despesa.setData(cal);
+
         DespesaDAO dao = new DespesaDAO(this.getBaseContext());
         dao.inserirDespesa(despesa, categorias.getSelectedItem().toString());
         this.finish();

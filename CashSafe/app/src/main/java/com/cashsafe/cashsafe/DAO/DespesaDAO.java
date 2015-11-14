@@ -40,9 +40,10 @@ public class DespesaDAO {
         ContentValues values = new ContentValues();
         values.put("valor", despesa.getValor());
         values.put("descricao", despesa.getDecricao());
-        SimpleDateFormat formatador_saida = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatador_saida =  new SimpleDateFormat("d/M/y");
         String data = formatador_saida.format(despesa.getData().getTime());
         values.put("data", data);
+        System.out.println("S M " + despesa.getData().get(Calendar.MONTH) + " A " + despesa.getData().get(Calendar.YEAR));
         values.put("metodo_pagamento",despesa.getMetodoPagamento());
         values.put("categoria", nomeCategoria);
         db.insert("despesa", null, values);
@@ -51,7 +52,7 @@ public class DespesaDAO {
         List<Despesa> despesas = new LinkedList<Despesa>();
         Despesa despesa;
         Calendar cal;
-        SimpleDateFormat formatador = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatador =  new SimpleDateFormat("d/M/y");
         Cursor cursor =  db.rawQuery("SELECT  * FROM despesa",null);
         if (cursor.moveToFirst()) {
             do {
@@ -67,8 +68,9 @@ public class DespesaDAO {
                     e.printStackTrace();
                 }
                 despesa.setData(cal);
+
                 despesa.setMetodoPagamento(cursor.getString(4));
-                System.out.println(despesa.getMetodoPagamento());
+                System.out.println("G M "+despesa.getData().get(Calendar.MONTH) + " A "+despesa.getData().get(Calendar.YEAR));
                 despesa.setCategoria(new CategoriaReceita(cursor.getString(5)));
                 despesas.add(despesa);
             } while (cursor.moveToNext());
@@ -77,7 +79,7 @@ public class DespesaDAO {
     }
 
     public void editar(Despesa despesa,String categoria){
-        SimpleDateFormat formatadorSaida = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatadorSaida =  new SimpleDateFormat("d/M/y");
         String data = formatadorSaida.format(despesa.getData().getTime());
         ContentValues values = new ContentValues();
         values.put("valor", String.valueOf(despesa.getValor()));

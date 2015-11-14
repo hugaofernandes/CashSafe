@@ -59,7 +59,7 @@ public class EditarDespesaActivity extends AppCompatActivity {
         metodoPagamentoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         pagamento.setAdapter(metodoPagamentoAdapter);
 
-        SimpleDateFormat formatador = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatador =  new SimpleDateFormat("d/M/y");
         String dataText = formatador.format(despesa.getData().getTime());
 
         valor.setText(String.valueOf(despesa.getValor()));
@@ -74,7 +74,7 @@ public class EditarDespesaActivity extends AppCompatActivity {
         despesa.setDecricao(descricao.getText().toString());
         despesa.setMetodoPagamento(pagamento.getSelectedItem().toString());
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatadorEntrada = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatadorEntrada =  new SimpleDateFormat("d/M/y");
         try {
             cal.setTime(formatadorEntrada.parse(data.getText().toString()));
         } catch (ParseException e) {

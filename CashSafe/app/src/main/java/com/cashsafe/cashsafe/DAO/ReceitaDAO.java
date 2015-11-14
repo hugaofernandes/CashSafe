@@ -43,7 +43,7 @@ public class ReceitaDAO {
         ContentValues values = new ContentValues();
         values.put("valor", receita.getValor());
         values.put("descricao", receita.getDecricao());
-        SimpleDateFormat formatadorSaida = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatadorSaida =  new SimpleDateFormat("d/M/y");
         String data = formatadorSaida.format(receita.getData().getTime());
         System.out.println("salvar data:"+data);
         values.put("data", data);
@@ -55,7 +55,7 @@ public class ReceitaDAO {
         List<Receita> receitas = new LinkedList<Receita>();
         Receita receita;
         Calendar cal;
-        SimpleDateFormat formatador = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatador =  new SimpleDateFormat("d/M/y");
         Cursor cursor =  db.rawQuery("SELECT  * FROM receita", null);
         if (cursor.moveToFirst()) {
             do {
@@ -73,13 +73,14 @@ public class ReceitaDAO {
                 }
                 receita.setData(cal);
                 receita.setCategoria(new CategoriaReceita(cursor.getString(4)));
+                System.out.println(receita.getData().getTime());
                 receitas.add(receita);
             } while (cursor.moveToNext());
         }
         return receitas;
     }
     public void editar(Receita receita,String categoria){
-        SimpleDateFormat formatadorSaida = new SimpleDateFormat("DD/MM/yyyy");
+        SimpleDateFormat formatadorSaida =  new SimpleDateFormat("d/M/y");
         String data = formatadorSaida.format(receita.getData().getTime());
         ContentValues values = new ContentValues();
         values.put("valor", String.valueOf(receita.getValor()));

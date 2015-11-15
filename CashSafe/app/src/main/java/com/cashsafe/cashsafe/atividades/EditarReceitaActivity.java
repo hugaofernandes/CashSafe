@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import com.cashsafe.cashsafe.DAO.CategoriaReceitaDAO;
 import com.cashsafe.cashsafe.DAO.ReceitaDAO;
 import com.cashsafe.cashsafe.R;
+import com.cashsafe.cashsafe.Util.ErroValidacao;
 import com.cashsafe.cashsafe.modelo.Receita;
 
 import java.text.ParseException;
@@ -56,21 +57,48 @@ public class EditarReceitaActivity extends AppCompatActivity {
         categorias.setSelection(nomeCategorias.indexOf(receita.getCategoria().getNome()));
     }
 
-    public void salvar(View view){
-        receita.setValor(Double.parseDouble(valor.getText().toString()));
-        receita.setDecricao(descricao.getText().toString());
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatadorEntrada =  new SimpleDateFormat("d/M/y");
-        try {
-            cal.setTime(formatadorEntrada.parse(data.getText().toString()));
-        } catch (ParseException e) {
-            e.printStackTrace();
+    public ErroValidacao validar(){
+        if (valor.getText().toString().isEmpty()){
+            valor.setError(ErroValidacao.CAMPO_OBRIGATORIO.getDescricao());
+            return ErroValidacao.CAMPO_OBRIGATORIO;
         }
-        receita.setData(cal);
-        ReceitaDAO dao = new ReceitaDAO(this.getBaseContext());
-        dao.editar(receita,categorias.getSelectedItem().toString());
-        dao.fecharBanco();
-        this.finish();
+        if (data.getText().toString().isEmpty()){
+            data.setError(ErroValidacao.CAMPO_OBRIGATORIO.getDescricao());
+            return ErroValidacao.CAMPO_OBRIGATORIO;
+        }
+        try {
+            Double.parseDouble(valor.getText().toString());
+        }catch (Exception e){
+            valor.setError(ErroValidacao.VALOR_INVALIDO.getDescricao());
+            return ErroValidacao.VALOR_INVALIDO;
+        }
+        SimpleDateFormat formatadorEntrada =  new SimpleDateFormat("d/M/y");
+        try{
+            formatadorEntrada.parse(data.getText().toString());
+        }catch (Exception e){
+            data.setError(ErroValidacao.DATA_INVALIDA.getDescricao());
+            return ErroValidacao.DATA_INVALIDA;
+        }
+        return null;
+    }
+
+    public void salvar(View view){
+        if (this.validar()==null) {
+            receita.setValor(Double.parseDouble(valor.getText().toString()));
+            receita.setDecricao(descricao.getText().toString());
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat formatadorEntrada = new SimpleDateFormat("d/M/y");
+            try {
+                cal.setTime(formatadorEntrada.parse(data.getText().toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            receita.setData(cal);
+            ReceitaDAO dao = new ReceitaDAO(this.getBaseContext());
+            dao.editar(receita, categorias.getSelectedItem().toString());
+            dao.fecharBanco();
+            this.finish();
+        }
     }
 
     public void cancelar(View view){

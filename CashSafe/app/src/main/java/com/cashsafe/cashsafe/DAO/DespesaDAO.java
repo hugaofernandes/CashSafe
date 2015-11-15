@@ -44,7 +44,6 @@ public class DespesaDAO {
         SimpleDateFormat formatador_saida =  new SimpleDateFormat("y/M/d");
         String data = formatador_saida.format(despesa.getData().getTime());
         values.put("data", data);
-        System.out.println("S M " + despesa.getData().get(Calendar.MONTH) + " A " + despesa.getData().get(Calendar.YEAR));
         values.put("metodo_pagamento",despesa.getMetodoPagamento());
         values.put("categoria", nomeCategoria);
         db.insert("despesa", null, values);
@@ -75,7 +74,6 @@ public class DespesaDAO {
                 cal = Calendar.getInstance();
                 try {
                     String time = cursor.getString(3);
-                    System.out.println(time);
                     cal.setTime(formatador.parse(time));
                 }
                 catch (Exception e){
@@ -113,7 +111,6 @@ public class DespesaDAO {
                 despesa.setData(cal);
 
                 despesa.setMetodoPagamento(cursor.getString(4));
-                System.out.println("G M " + despesa.getData().get(Calendar.MONTH) + " A " + despesa.getData().get(Calendar.YEAR));
                 despesa.setCategoria(new CategoriaReceita(cursor.getString(5)));
                 despesas.add(despesa);
             } while (cursor.moveToNext());

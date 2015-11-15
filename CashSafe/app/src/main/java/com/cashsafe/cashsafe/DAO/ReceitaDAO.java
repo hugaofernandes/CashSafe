@@ -45,7 +45,6 @@ public class ReceitaDAO {
         values.put("descricao", receita.getDecricao());
         SimpleDateFormat formatadorSaida =  new SimpleDateFormat("y/M/d");
         String data = formatadorSaida.format(receita.getData().getTime());
-        System.out.println("salvar data:"+data);
         values.put("data", data);
         values.put("categoria", nomeCategoria);
         db.insert("receita", null, values);
@@ -73,7 +72,6 @@ public class ReceitaDAO {
                 }
                 receita.setData(cal);
                 receita.setCategoria(new CategoriaReceita(cursor.getString(4)));
-                System.out.println(receita.getData().getTime());
                 receitas.add(receita);
             } while (cursor.moveToNext());
         }
@@ -105,7 +103,6 @@ public class ReceitaDAO {
                 cal = Calendar.getInstance();
                 try {
                     String time = cursor.getString(3);
-                    System.out.println(time);
                     cal.setTime(formatador.parse(time));
                 }
                 catch (Exception e){

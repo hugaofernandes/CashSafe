@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import com.cashsafe.cashsafe.DAO.CategoriaDespesaDAO;
 import com.cashsafe.cashsafe.DAO.DespesaDAO;
+import com.cashsafe.cashsafe.Util.ErroValidacao;
 import com.cashsafe.cashsafe.modelo.Despesa;
 import com.cashsafe.cashsafe.R;
 
@@ -60,21 +61,47 @@ public class DespesaActivity extends AppCompatActivity {
     public void cancelar(View view) {
         this.finish();
     }
+    public ErroValidacao validar(){
+        if (valor.getText().toString().isEmpty()){
+            valor.setError(ErroValidacao.CAMPO_OBRIGATORIO.getDescricao());
+            return ErroValidacao.CAMPO_OBRIGATORIO;
+        }
+        if (data.getText().toString().isEmpty()){
+            data.setError(ErroValidacao.CAMPO_OBRIGATORIO.getDescricao());
+            return ErroValidacao.CAMPO_OBRIGATORIO;
+        }
+        try {
+            Double.parseDouble(valor.getText().toString());
+        }catch (Exception e){
+            valor.setError(ErroValidacao.VALOR_INVALIDO.getDescricao());
+            return ErroValidacao.VALOR_INVALIDO;
+        }
+        SimpleDateFormat formatadorEntrada =  new SimpleDateFormat("d/M/y");
+        try{
+            formatadorEntrada.parse(data.getText().toString());
+        }catch (Exception e){
+            data.setError(ErroValidacao.DATA_INVALIDA.getDescricao());
+            return ErroValidacao.DATA_INVALIDA;
+        }
+        return null;
+    }
 
     public void okay(View view) throws ParseException {
-        Despesa despesa = new Despesa();
-        despesa.setValor(Double.parseDouble(valor.getText().toString()));
-        despesa.setDecricao(descricao.getText().toString());
+        if (this.validar()==null) {
+            Despesa despesa = new Despesa();
+            despesa.setValor(Double.parseDouble(valor.getText().toString()));
+            despesa.setDecricao(descricao.getText().toString());
 
-        despesa.setMetodoPagamento(pagamento.getSelectedItem().toString());
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatadorEntrada = new SimpleDateFormat("d/M/y");
-        cal.setTime(formatadorEntrada.parse(data.getText().toString()));
-        despesa.setData(cal);
+            despesa.setMetodoPagamento(pagamento.getSelectedItem().toString());
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat formatadorEntrada = new SimpleDateFormat("d/M/y");
+            cal.setTime(formatadorEntrada.parse(data.getText().toString()));
+            despesa.setData(cal);
 
-        DespesaDAO dao = new DespesaDAO(this.getBaseContext());
-        dao.inserirDespesa(despesa, categorias.getSelectedItem().toString());
-        this.finish();
+            DespesaDAO dao = new DespesaDAO(this.getBaseContext());
+            dao.inserirDespesa(despesa, categorias.getSelectedItem().toString());
+            this.finish();
+        }
     }
 
 }

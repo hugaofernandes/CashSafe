@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import com.cashsafe.cashsafe.DAO.CategoriaReceitaDAO;
 import com.cashsafe.cashsafe.DAO.ReceitaDAO;
 import com.cashsafe.cashsafe.R;
+import com.cashsafe.cashsafe.Util.ErroValidacao;
 import com.cashsafe.cashsafe.modelo.Despesa;
 import com.cashsafe.cashsafe.modelo.Receita;
 
@@ -62,17 +63,44 @@ public class ReceitaActivity extends AppCompatActivity {
         this.finish();
     }
 
-    public void okay(View view) throws ParseException {
-        Receita receita = new Receita();
-        receita.setValor(Double.parseDouble(valor.getText().toString()));
-        receita.setDecricao(descricao.getText().toString());
-        Calendar cal = Calendar.getInstance();
+    public ErroValidacao validar(){
+        if (valor.getText().toString().isEmpty()){
+            valor.setError(ErroValidacao.CAMPO_OBRIGATORIO.getDescricao());
+            return ErroValidacao.CAMPO_OBRIGATORIO;
+        }
+        if (data.getText().toString().isEmpty()){
+            data.setError(ErroValidacao.CAMPO_OBRIGATORIO.getDescricao());
+            return ErroValidacao.CAMPO_OBRIGATORIO;
+        }
+        try {
+            Double.parseDouble(valor.getText().toString());
+        }catch (Exception e){
+            valor.setError(ErroValidacao.VALOR_INVALIDO.getDescricao());
+            return ErroValidacao.VALOR_INVALIDO;
+        }
         SimpleDateFormat formatadorEntrada =  new SimpleDateFormat("d/M/y");
-        cal.setTime(formatadorEntrada.parse(data.getText().toString()));
-        receita.setData(cal);
-        ReceitaDAO dao = new ReceitaDAO(this.getBaseContext());
-        dao.inserirReceita(receita,categorias.getSelectedItem().toString());
-        this.finish();
+        try{
+            formatadorEntrada.parse(data.getText().toString());
+        }catch (Exception e){
+            data.setError(ErroValidacao.DATA_INVALIDA.getDescricao());
+            return ErroValidacao.DATA_INVALIDA;
+        }
+        return null;
+    }
+
+    public void okay(View view) throws ParseException {
+        if (this.validar()==null){
+            Receita receita = new Receita();
+            receita.setValor(Double.parseDouble(valor.getText().toString()));
+            receita.setDecricao(descricao.getText().toString());
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat formatadorEntrada =  new SimpleDateFormat("d/M/y");
+            cal.setTime(formatadorEntrada.parse(data.getText().toString()));
+            receita.setData(cal);
+            ReceitaDAO dao = new ReceitaDAO(this.getBaseContext());
+            dao.inserirReceita(receita,categorias.getSelectedItem().toString());
+            this.finish();
+        }
     }
 
 }

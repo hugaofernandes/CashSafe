@@ -158,7 +158,29 @@ public class ReceitaDAO {
     }
 
     public HashMap getSomaValoresPorCategoria(){
-        Cursor cursor =  db.rawQuery("SELECT  receita.categoria,sum(receita.valor) FROM receita GROUP BY receita.categoria;",null);
+        Cursor cursor =  db.rawQuery("SELECT  receita.categoria,sum(receita.valor) FROM receita GROUP BY receita.categoria;", null);
+        HashMap<String, Double> resultado = new HashMap<String, Double>();
+        if (cursor.moveToFirst()) {
+            do {
+                resultado.put(cursor.getString(0),cursor.getDouble(1));
+            } while (cursor.moveToNext());
+        }
+        return resultado;
+    }
+
+    public HashMap getSomaValoresPorCategoria(Calendar mes){
+        Calendar ultimoDiaMes = Calendar.getInstance();
+        ultimoDiaMes.set(Calendar.DATE, mes.getActualMaximum(Calendar.DATE));
+
+        Calendar primeiroDiaMes = Calendar.getInstance();
+        primeiroDiaMes.set(Calendar.DATE, mes.getActualMinimum(Calendar.DATE));
+
+        SimpleDateFormat formatador =  new SimpleDateFormat("y/M/d");
+        String primeiroDiaMesS = formatador.format(primeiroDiaMes.getTime());
+        String ultimoDiaMesS = formatador.format(ultimoDiaMes.getTime());
+
+        Cursor cursor =  db.rawQuery("SELECT  receita.categoria,sum(receita.valor) FROM receita WHERE receita.data >= ? AND receita.data <= ? GROUP BY receita.categoria;",
+                new String [] {primeiroDiaMesS,ultimoDiaMesS});
         HashMap<String, Double> resultado = new HashMap<String, Double>();
         if (cursor.moveToFirst()) {
             do {

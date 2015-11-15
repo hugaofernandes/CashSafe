@@ -134,7 +134,7 @@ public class PrincipalActivity extends AppCompatActivity {
     public void setValoresGraficoDespesa(){
         DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());
 
-        HashMap<String, Double> resultado = daoDespesas.getSomaValoresPorCategoria();
+        HashMap<String, Double> resultado = daoDespesas.getSomaValoresPorCategoria(Calendar.getInstance());
 
 
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
@@ -193,7 +193,7 @@ public class PrincipalActivity extends AppCompatActivity {
     public void setValoresGraficoReceita(){
         ReceitaDAO receitaDAO = new ReceitaDAO(this.getBaseContext());
 
-        HashMap<String, Double> resultado = receitaDAO.getSomaValoresPorCategoria();
+        HashMap<String, Double> resultado = receitaDAO.getSomaValoresPorCategoria(Calendar.getInstance());
 
 
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();

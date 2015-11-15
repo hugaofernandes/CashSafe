@@ -113,7 +113,7 @@ public class DespesaDAO {
                 despesa.setData(cal);
 
                 despesa.setMetodoPagamento(cursor.getString(4));
-                System.out.println("G M "+despesa.getData().get(Calendar.MONTH) + " A "+despesa.getData().get(Calendar.YEAR));
+                System.out.println("G M " + despesa.getData().get(Calendar.MONTH) + " A " + despesa.getData().get(Calendar.YEAR));
                 despesa.setCategoria(new CategoriaReceita(cursor.getString(5)));
                 despesas.add(despesa);
             } while (cursor.moveToNext());
@@ -162,7 +162,29 @@ public class DespesaDAO {
         return 0.0;
     }
     public HashMap getSomaValoresPorCategoria(){
-        Cursor cursor =  db.rawQuery("SELECT  despesa.categoria,sum(despesa.valor) FROM despesa GROUP BY despesa.categoria;",null);
+        Cursor cursor =  db.rawQuery("SELECT  despesa.categoria,sum(despesa.valor) FROM despesa GROUP BY despesa.categoria;", null);
+        HashMap<String, Double> resultado = new HashMap<String, Double>();
+        if (cursor.moveToFirst()) {
+            do {
+                resultado.put(cursor.getString(0),cursor.getDouble(1));
+            } while (cursor.moveToNext());
+        }
+        return resultado;
+    }
+
+    public HashMap getSomaValoresPorCategoria(Calendar mes){
+        Calendar ultimoDiaMes = Calendar.getInstance();
+        ultimoDiaMes.set(Calendar.DATE, mes.getActualMaximum(Calendar.DATE));
+
+        Calendar primeiroDiaMes = Calendar.getInstance();
+        primeiroDiaMes.set(Calendar.DATE, mes.getActualMinimum(Calendar.DATE));
+
+        SimpleDateFormat formatador =  new SimpleDateFormat("y/M/d");
+        String primeiroDiaMesS = formatador.format(primeiroDiaMes.getTime());
+        String ultimoDiaMesS = formatador.format(ultimoDiaMes.getTime());
+
+        Cursor cursor =  db.rawQuery("SELECT  despesa.categoria,sum(despesa.valor) FROM despesa WHERE despesa.data >= ? AND despesa.data <= ? GROUP BY despesa.categoria;",
+                new String [] {primeiroDiaMesS,ultimoDiaMesS});
         HashMap<String, Double> resultado = new HashMap<String, Double>();
         if (cursor.moveToFirst()) {
             do {

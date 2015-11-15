@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.cashsafe.cashsafe.Util.MySQLiteHelper;
 import com.cashsafe.cashsafe.modelo.CategoriaReceita;
@@ -40,7 +41,7 @@ public class DespesaDAO {
         ContentValues values = new ContentValues();
         values.put("valor", despesa.getValor());
         values.put("descricao", despesa.getDecricao());
-        SimpleDateFormat formatador_saida =  new SimpleDateFormat("d/M/y");
+        SimpleDateFormat formatador_saida =  new SimpleDateFormat("y/M/d");
         String data = formatador_saida.format(despesa.getData().getTime());
         values.put("data", data);
         System.out.println("S M " + despesa.getData().get(Calendar.MONTH) + " A " + despesa.getData().get(Calendar.YEAR));
@@ -48,11 +49,53 @@ public class DespesaDAO {
         values.put("categoria", nomeCategoria);
         db.insert("despesa", null, values);
     }
+    public List<Despesa> getDespesasPorMes(Calendar mes) {
+
+        Calendar ultimoDiaMes = Calendar.getInstance();
+        ultimoDiaMes.set(Calendar.DATE, mes.getActualMaximum(Calendar.DATE));
+
+        Calendar primeiroDiaMes = Calendar.getInstance();
+        primeiroDiaMes.set(Calendar.DATE, mes.getActualMinimum(Calendar.DATE));
+
+        List<Despesa> despesas = new ArrayList<Despesa>();
+        Despesa despesa;
+        Calendar cal;
+
+        SimpleDateFormat formatador =  new SimpleDateFormat("y/M/d");
+        String primeiroDiaMesS = formatador.format(primeiroDiaMes.getTime());
+        String ultimoDiaMesS = formatador.format(ultimoDiaMes.getTime());
+
+        Cursor cursor =  db.rawQuery("SELECT  * FROM despesa WHERE despesa.data >= ? AND despesa.data <= ?;",new String [] {primeiroDiaMesS,ultimoDiaMesS});
+        if (cursor.moveToFirst()) {
+            do {
+                despesa = new Despesa();
+                despesa.setId(cursor.getInt(0));
+                despesa.setValor(cursor.getDouble(1));
+                despesa.setDecricao(cursor.getString(2));
+                cal = Calendar.getInstance();
+                try {
+                    String time = cursor.getString(3);
+                    System.out.println(time);
+                    cal.setTime(formatador.parse(time));
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                despesa.setData(cal);
+
+                despesa.setMetodoPagamento(cursor.getString(4));
+                despesa.setCategoria(new CategoriaReceita(cursor.getString(5)));
+                despesas.add(despesa);
+            } while (cursor.moveToNext());
+        }
+        return despesas;
+    }
+
     public List<Despesa> getTodasDespesas() {
         List<Despesa> despesas = new ArrayList<Despesa>();
         Despesa despesa;
         Calendar cal;
-        SimpleDateFormat formatador =  new SimpleDateFormat("d/M/y");
+        SimpleDateFormat formatador =  new SimpleDateFormat("y/M/d");
         Cursor cursor =  db.rawQuery("SELECT  * FROM despesa",null);
         if (cursor.moveToFirst()) {
             do {
@@ -79,19 +122,19 @@ public class DespesaDAO {
     }
 
     public void editar(Despesa despesa,String categoria){
-        SimpleDateFormat formatadorSaida =  new SimpleDateFormat("d/M/y");
+        SimpleDateFormat formatadorSaida =  new SimpleDateFormat("y/M/d");
         String data = formatadorSaida.format(despesa.getData().getTime());
         ContentValues values = new ContentValues();
         values.put("valor", String.valueOf(despesa.getValor()));
         values.put("descricao", despesa.getDecricao());
         values.put("data", data);
         values.put("categoria", categoria);
-        values.put("metodo_pagamento",despesa.getMetodoPagamento());
+        values.put("metodo_pagamento", despesa.getMetodoPagamento());
         int i = db.update("despesa", values, "id" + " = ?", new String[]{ String.valueOf(despesa.getId())});
     }
 
     public void apagar(Despesa despesa){
-        db.delete("despesa", "id"+" = ?",new String[]{ String.valueOf(despesa.getId())});
+        db.delete("despesa", "id" + " = ?", new String[]{String.valueOf(despesa.getId())});
     }
 
     public double getSomaValores(){
@@ -101,7 +144,23 @@ public class DespesaDAO {
         }
         return 0;
     }
+    public double getSomaDespesasPorMes(Calendar mes) {
+        Calendar ultimoDiaMes = Calendar.getInstance();
+        ultimoDiaMes.set(Calendar.DATE, mes.getActualMaximum(Calendar.DATE));
 
+        Calendar primeiroDiaMes = Calendar.getInstance();
+        primeiroDiaMes.set(Calendar.DATE, mes.getActualMinimum(Calendar.DATE));
+
+        SimpleDateFormat formatador =  new SimpleDateFormat("y/M/d");
+        String primeiroDiaMesS = formatador.format(primeiroDiaMes.getTime());
+        String ultimoDiaMesS = formatador.format(ultimoDiaMes.getTime());
+
+        Cursor cursor =  db.rawQuery("SELECT  SUM(despesa.valor) FROM despesa WHERE despesa.data >= ? AND despesa.data <= ?;",new String [] {primeiroDiaMesS,ultimoDiaMesS});
+
+        if (cursor.moveToFirst())
+            return cursor.getDouble(0);
+        return 0.0;
+    }
     public HashMap getSomaValoresPorCategoria(){
         Cursor cursor =  db.rawQuery("SELECT  despesa.categoria,sum(despesa.valor) FROM despesa GROUP BY despesa.categoria;",null);
         HashMap<String, Double> resultado = new HashMap<String, Double>();

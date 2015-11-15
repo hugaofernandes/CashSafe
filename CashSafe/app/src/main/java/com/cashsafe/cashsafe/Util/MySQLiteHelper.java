@@ -24,7 +24,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d(this.getClass().getSimpleName(), "created MysqlHelper");
     }
 
     @Override

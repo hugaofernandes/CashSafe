@@ -108,27 +108,15 @@ public class PrincipalActivity extends AppCompatActivity {
     public void setValoresRecEdes(){
         ReceitaDAO daoReceitas = new ReceitaDAO(this.getBaseContext());
         DespesaDAO daoDespesas = new DespesaDAO(this.getBaseContext());
+
         Calendar hoje = Calendar.getInstance();
-        ArrayList<Receita> receitas = (ArrayList<Receita>) daoReceitas.getTodasReceitas();
-        Double valorTotalReceitas = 0.0;
-        for (Receita receita:receitas){
-            if(receita.getData().get(Calendar.MONTH)==hoje.get(Calendar.MONTH) &&
-                    receita.getData().get(Calendar.YEAR)==hoje.get(Calendar.YEAR)){
-                valorTotalReceitas+=receita.getValor();
-            }
-        }
+
+        Double valorTotalReceitas = daoReceitas.getSomaReceitaPorMes(hoje);
         TextView totalReceitas = (TextView)findViewById(R.id.valor_receita_principal);
         totalReceitas.setText("R$" + String.format("%.2f", valorTotalReceitas));
 
-        ArrayList<Despesa> despesas = (ArrayList<Despesa>) daoDespesas.getTodasDespesas();
-        Double valorTotalDespesas = 0.0;
-        for (Despesa despesa:despesas){
-            if(despesa.getData().get(Calendar.MONTH)==hoje.get(Calendar.MONTH) &&
-                    despesa.getData().get(Calendar.YEAR)==hoje.get(Calendar.YEAR)){
-                valorTotalDespesas+=despesa.getValor();
-            }
-        }
 
+        Double valorTotalDespesas = daoDespesas.getSomaDespesasPorMes(hoje);
         TextView totalDespesas = (TextView)findViewById(R.id.valor_despesas_principal);
         totalDespesas.setText("R$" + String.format("%.2f", valorTotalDespesas));
 
